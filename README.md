@@ -1,18 +1,8 @@
-## Getting Started
+## Autores
+Vicente Matallana -> 202212717
+Sebastian Cañon -> 202127352
+Gabriel Cely -> 202213440
+Nicolas Cardenas -> 202211782
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
-
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Estructura
+Las clases del proyecto se encuentran dentro de la carpte `src`, dicha carpeta a su vez está divida en 3 capas (haciendo uso del modelo MVP), la capa de modelo tiene a su vez 3 carpetas para poder organizar mejore el codigo en donde las carpetas `user` y `product` contienen las clases padres y sus clases hijas para cada uno de los objetos necesarios dentro del proyecto, la tercera carpeta (`services`) tiene la finalidad de servir como un tipo de API con la cual poder interactura con los usuarios y sus productos.
