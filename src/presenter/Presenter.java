@@ -22,7 +22,7 @@ public class Presenter {
                     runServices();
                     break;
                 case 2:
-                    toolkit.login();
+                    toolkit.logUser();
                     runServices();
                     break;
                 case 3:

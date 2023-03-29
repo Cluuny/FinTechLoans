@@ -1,7 +1,7 @@
 package model.Services;
 
-import model.Product.VirtualCard;
-import model.User.User;
+import model.product.VirtualCard;
+import model.user.User;
 
 public class ToolKit {
     public int calculateRisk(User user) {
@@ -17,7 +17,7 @@ public class ToolKit {
     }
 
     // añadir implementaciones para inicio de sesión
-    public void login() {
+    public void logUser() {
 
     }
 

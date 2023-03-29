@@ -1,7 +1,8 @@
 package model.Services;
 
 import java.util.ArrayList;
-import model.Product.*;
+
+import model.product.*;
 
 public class InternalHistory {
     private ArrayList<Product> internalHistory = new ArrayList<Product>();
