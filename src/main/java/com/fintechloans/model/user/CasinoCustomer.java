@@ -6,9 +6,9 @@ import com.fintechloans.model.services.*;
 public class CasinoCustomer extends User {
     private ArrayList<Integer> gameStats;
 
-    public CasinoCustomer(String name, String email, int age, int income, String contractType, int debts, int score,
-            InternalHistory internalHistory, ArrayList<Integer> gameStast) {
-        super(name, email, age, income, contractType, debts, score, internalHistory);
+    public CasinoCustomer(String name, String email, int age, int income, String contractType, int debts,
+            ArrayList<Integer> gameStast) {
+        super(name, email, age, income, contractType, debts);
         this.gameStats = gameStast;
     }
 

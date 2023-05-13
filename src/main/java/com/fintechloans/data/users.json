@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Vicnete",
+    "email": "Vocnete",
+    "age": 18,
+    "income": 1,
+    "contractType": "a",
+    "debts": 1,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "Sofia",
+    "email": "Sofia",
+    "age": 10,
+    "income": 1,
+    "contractType": "a",
+    "debts": 1,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "Vicnete",
+    "email": "Vicente",
+    "age": 18,
+    "income": 1,
+    "contractType": "a",
+    "debts": 1,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "Vicente",
+    "email": "Vicente",
+    "age": 18,
+    "income": 1,
+    "contractType": "a",
+    "debts": 1,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "Vicente",
+    "email": "Vicente",
+    "age": 18,
+    "income": 1,
+    "contractType": "a",
+    "debts": 1,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "Vicente",
+    "email": "vicente",
+    "age": 18,
+    "income": 1,
+    "contractType": "a",
+    "debts": 1,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "Vicente",
+    "email": "Vicente",
+    "age": 18,
+    "income": 1,
+    "contractType": "a",
+    "debts": 1,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "Vicente",
+    "email": "vicente",
+    "age": 18,
+    "income": 1,
+    "contractType": "a",
+    "debts": 1,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "Sara",
+    "email": "Sara",
+    "age": 18,
+    "income": 1,
+    "contractType": "a",
+    "debts": 1,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "vicebfa",
+    "email": "asfdgsfaas",
+    "age": 56789,
+    "income": 123454,
+    "contractType": "sdfda",
+    "debts": 1,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "ASFDS",
+    "email": "ASDFDGDSFAD",
+    "age": 1879,
+    "income": 12412,
+    "contractType": "wfdsa",
+    "debts": 123,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "name": "ASFDAS",
+    "email": "ASDASDAS",
+    "age": 127893,
+    "income": 1278,
+    "contractType": "jdsh",
+    "debts": 123,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  }
+]
