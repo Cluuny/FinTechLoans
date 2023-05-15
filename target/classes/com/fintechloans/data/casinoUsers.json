@@ -1,0 +1,26 @@
+[
+  {
+    "gameStats": [],
+    "name": "El mejor apostador del mundo",
+    "email": "soy.el.mejor@jij.com",
+    "password": "12345678",
+    "age": 67,
+    "income": 0,
+    "contractType": "Apostar es mi pasióm",
+    "debts": 100000000,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  },
+  {
+    "gameStats": [],
+    "name": "Sarsadas",
+    "email": "asdf",
+    "password": "ad",
+    "age": 1,
+    "income": 213,
+    "contractType": "asdf",
+    "debts": 12,
+    "score": 0,
+    "InternalHistory": { "internalHistory": [] }
+  }
+]

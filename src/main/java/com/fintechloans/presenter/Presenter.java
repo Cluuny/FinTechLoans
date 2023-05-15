@@ -1,27 +1,19 @@
 package com.fintechloans.presenter;
 
 import com.fintechloans.view.View;
-import com.google.gson.Gson;
-
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.fintechloans.model.services.ToolKit;
+import com.fintechloans.model.user.User;
 
 public class Presenter {
     private View view;
-    private File path;
-    private Gson mapper;
     private ToolKit toolkit;
-    private FileReader reader;
 
     public Presenter() throws Exception {
         view = new View();
-        mapper = new Gson();
         toolkit = new ToolKit();
-        path = new File("src/main/java/com/fintechloans/data/users.json");
-        reader = new FileReader(path);
     }
 
     public void run() {
@@ -38,8 +30,16 @@ public class Presenter {
                     }
                     break;
                 case 2:
-                    toolkit.logUser();
-                    this.runServices();
+                    int userType = view.readInt("Ingrese una opcion:\n1. Cliente Regular\n2. Cliente Casino");
+                    String userEmail = view.readString("Ingrese su correo electronico");
+                    String userPassword = view.readString("Ingrese su contraseña");
+                    try {
+                        User loggedUser = toolkit.logUser(userEmail, userPassword, userType);
+                        this.runServices(loggedUser);
+                    } catch (Exception e) {
+                        view.print("Ha ocurrido un error inesperado, porfavor intente de nuevo" + e.getStackTrace()
+                                + "\n" + e.getLocalizedMessage());
+                    }
                     break;
                 case 3:
                     view.print("Gracias por usar nuestros servicios, vuelva pronto!");
@@ -52,42 +52,81 @@ public class Presenter {
         }
     }
 
-    // TODO: Implementar registro de usuario
     public void register() throws IOException {
         String userOptions = "Porfavor escoga el tipo de cliente\n1. Cliente Regular\n2. Cliente Casino\n3. Regresar al menu principal";
+        int age;
+        int debts;
+        int income;
+        String name;
+        String email;
+        String password;
+        String contractType;
         boolean flag = true;
         while (flag) {
             int userOpt = view.readInt(userOptions);
             switch (userOpt) {
                 case 1:
-                    String name = view.readString("Porfavor ingrese su nombre completo");
-                    String email = view.readString("Porfavor ingrese su correo electronico");
-                    int age = view.readInt("Porfavor ingrese su edad");
-                    String contractType = view.readString("Porfavor ingrese su tipo de contrato");
-                    int income = view.readInt("Porfavor ingrese su ingreso mensual");
-                    int debts = view.readInt("Porfavor ingrese la cantidad de deudas que tiene");
+                    view.print("Creación de usuario regular");
+                    name = view.readString("Porfavor ingrese su nombre completo");
+                    email = view.readString("Porfavor ingrese su correo electronico");
+                    password = view.readString("ingrese una contraseña para su cuenta");
+                    age = view.readInt("Porfavor ingrese su edad");
+                    contractType = view.readString("Porfavor ingrese su tipo de contrato");
+                    income = view.readInt("Porfavor ingrese su salario mensual");
+                    debts = view.readInt("Porfavor ingrese el monto monetario de deudas que tiene: ");
                     try {
-                        toolkit.createRegularUSer(name, email, age, income, contractType, debts);
+                        toolkit.createRegularUSer(name, email, password, age, income, contractType, debts);
                     } catch (Exception e) {
                         view.print(e.getLocalizedMessage() + "");
                     }
                     break;
                 case 2:
+                    name = view.readString("Porfavor ingrese su nombre completo");
+                    email = view.readString("Porfavor ingrese su correo electronico");
+                    password = view.readString("Ingrese una contraseña para su cuenta:");
+                    age = view.readInt("Porfavor ingrese su edad");
+                    contractType = view.readString("Porfavor ingrese su tipo de contrato");
+                    income = view.readInt("Porfavor ingrese su salario mensual");
+                    debts = view.readInt("Porfavor ingrese el monto monetario de sus deudas: ");
+                    String hasGameStast = view.readString("Tiene usted un historial de juego? (y/n)").toLowerCase();
+                    ArrayList<Integer> gameStats = new ArrayList<Integer>();
+                    if (hasGameStast.equals("y")) {
+                        Boolean exit = false;
+                        view.print(
+                                "Acontinuación ingrese uno a uno el puntaje obtenido por cada juego, cuando hay terminado ingrese la palabra: SALIR");
+                        int gameCounter = 0;
+                        while (!exit) {
+                            String gameStat = view
+                                    .readString("Ingrese el puntaje obtenido en su juego N°" + gameCounter + ": ")
+                                    .toLowerCase();
+                            if (gameStat.equals("salir")) {
+                                exit = true;
+                            } else {
+                                gameStats.add(Integer.parseInt(gameStat));
+                            }
+                            gameCounter += 1;
+                        }
+                    }
+                    try {
+                        toolkit.createCasinoUser(name, email, password, age, income, contractType, debts, gameStats);
+                    } catch (Exception e) {
+                        view.print(e.getLocalizedMessage() + "");
+                    }
                     break;
                 case 3:
                     flag = false;
                     break;
                 default:
                     view.print("Opción no valida, porfavor intente de nuevo");
-                    userOpt = view.readInt(userOptions);
                     break;
             }
         }
 
     }
 
-    public void runServices() {
-        String runServicesMenu = "Hemos verificado tu identidad!\nAhora porfavor escoge que quieres hacer hoy?\n1. Adquirir productos\n2. Añadir metodos de pago\n3. Pagar productos pendientes\n4. Regresa al menu principal";
+    public void runServices(User user) {
+        String runServicesMenu = "Bienvenido, " + user.getName()
+                + "! \nHemos verificado tu identidad!\nAhora porfavor escoge que quieres hacer hoy?\n1. Adquirir productos\n2. Añadir metodos de pago\n3. Pagar productos pendientes\n4. Cerrar sesión y regresar al menu principal";
         int runServicesOpt = view.readInt(runServicesMenu);
         while (runServicesOpt <= 4) {
             switch (runServicesOpt) {

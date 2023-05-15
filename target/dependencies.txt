@@ -1,0 +1,5 @@
+digraph "com.fintechloans:fintechloans:jar:1.0-SNAPSHOT" { 
+	"com.fintechloans:fintechloans:jar:1.0-SNAPSHOT" -> "junit:junit:jar:4.11:test" ; 
+	"com.fintechloans:fintechloans:jar:1.0-SNAPSHOT" -> "com.google.code.gson:gson:jar:2.10.1:compile" ; 
+	"junit:junit:jar:4.11:test" -> "org.hamcrest:hamcrest-core:jar:1.3:test" ; 
+ } 

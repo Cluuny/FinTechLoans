@@ -5,6 +5,8 @@ import com.fintechloans.model.services.*;
 public abstract class User {
     private String name;
     private String email;
+    private String password;
+
     private int age;
     private int income;
     private String contractType;
@@ -12,9 +14,10 @@ public abstract class User {
     private int score;
     private InternalHistory InternalHistory;
 
-    public User(String name, String email, int age, int income, String contractType, int debts) {
+    public User(String name, String email, String password, int age, int income, String contractType, int debts) {
         this.name = name;
         this.email = email;
+        this.password = password;
         this.age = age;
         this.income = income;
         this.contractType = contractType;
@@ -41,6 +44,14 @@ public abstract class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getAge() {
