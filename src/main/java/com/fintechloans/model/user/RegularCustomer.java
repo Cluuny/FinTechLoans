@@ -4,8 +4,9 @@ import com.fintechloans.model.services.*;
 
 public class RegularCustomer extends User {
 
-    public RegularCustomer(String name, String email, int age, int income, String contractType, int debts) {
-        super(name, email, age, income, contractType, debts);
+    public RegularCustomer(String name, String email, String password, int age, int income, String contractType,
+            int debts) {
+        super(name, email, password, age, income, contractType, debts);
     }
 
     @Override
