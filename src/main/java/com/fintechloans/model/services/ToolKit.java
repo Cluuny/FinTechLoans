@@ -3,6 +3,7 @@ package com.fintechloans.model.services;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.ArrayList;
 
 import com.fintechloans.exceptions.UserNotFoundException;
 import com.fintechloans.model.product.VirtualCard;
