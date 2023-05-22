@@ -8,12 +8,18 @@ Las clases del proyecto se encuentran dentro de la ruta `src/java/com/fintechloa
 El objetivo de realizar el proyecto en Maven se debe a la necesidad de usar librerias externas a el core de java para poder manejo a algunas features que queremos implementar, mas especificamente el manejo de archivos `.json` dentro de nuestro proyecto
 
 ## ToDo's  
-- Calcular riesgo asociado al puntaje del usuario
-- Generar codigos para tarjetas virtuales
-- Clase para prestamos de casino en noche de juego
+- Calcular riesgo asociado al puntaje del usuario → Vicente(ToolKit)
+- Generar codigos para tarjetas virtuales  → Gabriel (ToolKit)
+- Clase para prestamos de casino en noche de juego → Sebastian (CasinoLoan)
+
+---
+
 - Implementar adquisición de productos
 - Implementar sistema de cuotas y saldo en productos
 - Implementar pago de cuotas para prestamo regular y tarjeta de credito
+
+---
+
 - Cancelar prestamo (pagar en su totalidad)
 - Diferir prestamo en mas cuotas
 - Implementar pasarela de productos para mercados aliados y no aliados
