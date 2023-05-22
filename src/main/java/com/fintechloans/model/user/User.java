@@ -1,5 +1,8 @@
 package com.fintechloans.model.user;
 
+import java.util.ArrayList;
+
+import com.fintechloans.model.product.Product;
 import com.fintechloans.model.services.*;
 
 public abstract class User {
@@ -13,6 +16,7 @@ public abstract class User {
     private int debts;
     private int score;
     private InternalHistory InternalHistory;
+    private ArrayList<Product> products;
 
     public User(String name, String email, String password, int age, int income, String contractType, int debts) {
         this.name = name;
@@ -22,7 +26,7 @@ public abstract class User {
         this.income = income;
         this.contractType = contractType;
         this.debts = debts;
-        this.score = score = 0;
+        this.score = 0;
         InternalHistory = new InternalHistory();
     }
 

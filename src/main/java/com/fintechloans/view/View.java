@@ -5,10 +5,6 @@ import java.util.Scanner;
 public class View {
   private Scanner sc;
 
-  // public View() {
-  // // sc = new Scanner(System.in);
-  // }
-
   public int readInt(String message) {
     System.out.println(message);
     int input = 0;

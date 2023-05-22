@@ -3,7 +3,6 @@ package com.fintechloans.model.services;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.ArrayList;
 
 import com.fintechloans.exceptions.UserNotFoundException;
 import com.fintechloans.model.product.VirtualCard;
@@ -11,7 +10,26 @@ import com.fintechloans.model.user.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * Clase que contiene los metodos necesarios para la creacion de usuarios,
+ * calculo de riesgo y generacion de codigos de tarjetas virtuales.
+ * 
+ * @author Vicente Matallana, Gabriel Cely, Sebastian Cañon
+ * @version 1.0.1
+ */
 public class ToolKit {
+
+    /**
+     * Atributos de la clase ToolKit
+     * 
+     * @param regularUsersPath   Ruta del archivo JSON que contiene los usuarios
+     * @param casinoUsersPath    Ruta del archivo JSON que contiene los usuarios
+     * @param jsonMapper         Objeto Gson que permite mapear los objetos a JSON
+     * @param regularUsersReader Objeto FileReader que permite leer el archivo JSON
+     * @param casinoUsersReader  Objeto FileReader que permite leer el archivo JSON
+     * @param writer             Objeto FileWriter que permite escribir en el
+     *                           archivo
+     */
 
     private String regularUsersPath;
     private String casinoUsersPath;
@@ -34,6 +52,20 @@ public class ToolKit {
         return 0;
     }
 
+    /**
+     * Metodo que permite crear un usuario regular y guardarlo en el archivo JSON
+     * 
+     * @param name
+     * @param email
+     * @param password
+     * @param age
+     * @param income
+     * @param contractType
+     * @param debts
+     * @return void
+     * @throws Exception
+     * 
+     */
     public void createRegularUSer(String name, String email, String password, int age, int income, String contractType,
             int debts)
             throws Exception {
@@ -48,6 +80,20 @@ public class ToolKit {
         writer.close();
     }
 
+    /**
+     * Metodo que permite crear un usuario de casino y guardarlo en el archivo JSON
+     * 
+     * @param name
+     * @param email
+     * @param password
+     * @param age
+     * @param income
+     * @param contractType
+     * @param debts
+     * @param gameStast
+     * @return void
+     * @throws Exception
+     */
     public void createCasinoUser(String name, String email, String password, int age, int income, String contractType,
             int debts,
             ArrayList<Integer> gameStast)
@@ -62,7 +108,15 @@ public class ToolKit {
         writer.close();
     }
 
-    // añadir implementaciones para inicio de sesión
+    /**
+     * Metodo que permite loguear un usuario
+     * 
+     * @param email
+     * @param password
+     * @param userType
+     * @return User
+     * @throws Exception
+     */
     public User logUser(String email, String password, int userType) throws Exception {
         JsonArray jsonAccounts;
         ArrayList<User> arrAccounts;
@@ -87,18 +141,5 @@ public class ToolKit {
             return account.getEmail().equals(email) && account.getPassword().equals(password);
         }).findFirst().get();
         return loggedUser;
-    }
-
-    // Añadir retorno RegularLoan cuando se implemente
-    public void createLoan(User user) {
-    }
-
-    // Añadir retorno VirtualCard cuando se implemente
-    public void createVirtualCard(User user) {
-    }
-
-    // Añadir implementaciones cuando se decida el funcionamiento con base en el
-    // Casino
-    public void casinoManagment() {
     }
 }

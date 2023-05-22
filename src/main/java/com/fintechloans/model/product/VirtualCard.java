@@ -11,7 +11,7 @@ public class VirtualCard extends Product {
     public VirtualCard(int digits, String expirationDate, int cCV, String provider, int balance) {
         this.digits = digits;
         this.expirationDate = expirationDate;
-        CCV = cCV;
+        this.CCV = cCV;
         this.provider = provider;
         this.balance = balance;
     }
