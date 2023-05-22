@@ -15,7 +15,7 @@ public abstract class User {
     private String contractType;
     private int debts;
     private int score;
-    private InternalHistory InternalHistory;
+    private InternalHistory internalHistory;
     private ArrayList<Product> products;
 
     public User(String name, String email, String password, int age, int income, String contractType, int debts) {
@@ -27,7 +27,8 @@ public abstract class User {
         this.contractType = contractType;
         this.debts = debts;
         this.score = 0;
-        InternalHistory = new InternalHistory();
+        this.internalHistory = new InternalHistory();
+        this.products = new ArrayList<Product>();
     }
 
     // Pendiente: añadir metodos de pago para el usuario
@@ -99,15 +100,23 @@ public abstract class User {
     }
 
     public InternalHistory getInternalHistory() {
-        return InternalHistory;
+        return internalHistory;
     }
 
     public void setInternalHistory(InternalHistory internalHistory) {
-        InternalHistory = internalHistory;
+        internalHistory = internalHistory;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
     }
 
     @Override
     public String toString() {
-        return "A";
+        return "Información del usuario";
     }
 }
