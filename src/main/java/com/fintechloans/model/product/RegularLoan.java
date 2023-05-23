@@ -1,38 +1,34 @@
 package com.fintechloans.model.product;
 
+import java.time.LocalDate;
+
 public class RegularLoan extends Product {
-    private int id;
-    private int amount;
-    private int term;
-    private int interestRate;
-    private int overDue;
 
-    public RegularLoan(int id, int amount, int term, int interestRate, int overDue) {
-        this.id = id;
-        this.amount = amount;
-        this.term = term;
-        this.interestRate = interestRate;
-        this.overDue = overDue;
+    public RegularLoan(double loanAmount, double interestRate, int termInMonths, LocalDate dueDate) {
+        super(loanAmount, interestRate, termInMonths, dueDate);
     }
 
     @Override
-    public Product payInstallment(int term, int amount) {
-        // Implementation for paying installment
-        // Update the loan state and return the updated product
-        return this;
+    public void payInstallment(LocalDate date) {
+        super.payInstallment(date);
+        checkOverdueStatus(LocalDate.now());
     }
 
     @Override
-    public String cancelProduct() {
-        // Implementation for canceling the regular loan
-        // Return a cancellation message
-        return "Regular loan canceled.";
+    public void checkOverdueStatus(LocalDate currentDate) {
+        super.checkOverdueStatus(currentDate);
+        if (isOverdue() && !isPaidOff()) {
+            System.out.println("You are overdue. Please pay quickly to avoid being reported to credit bureaus.");
+        }
     }
 
-    @Override
-    public Product differ(int amount) {
-        // Implementation for differing the regular loan
-        // Update the loan state and return the updated product
-        return this;
+    private boolean isOverdue() {
+        return !getInstallments().isEmpty() && LocalDate.now().isAfter(getDueDate());
+    }
+
+    private boolean isPaidOff() {
+        return isPaidOffLoan();
     }
 }
+
+
