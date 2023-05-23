@@ -26,7 +26,7 @@ public abstract class User {
         this.income = income;
         this.contractType = contractType;
         this.debts = debts;
-        this.score = 0;
+        this.score = 500;
         this.internalHistory = new InternalHistory();
         this.products = new ArrayList<Product>();
     }
@@ -104,7 +104,7 @@ public abstract class User {
     }
 
     public void setInternalHistory(InternalHistory internalHistory) {
-        internalHistory = internalHistory;
+        this.internalHistory = internalHistory;
     }
 
     public ArrayList<Product> getProducts() {

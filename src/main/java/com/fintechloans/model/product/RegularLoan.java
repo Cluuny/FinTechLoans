@@ -5,14 +5,14 @@ public class RegularLoan extends Product {
     private int amount;
     private int term;
     private int interestRate;
-    private int overDue;
+    private Boolean itsOverDated;
 
     public RegularLoan(int id, int amount, int term, int interestRate, int overDue) {
         this.id = id;
         this.amount = amount;
         this.term = term;
         this.interestRate = interestRate;
-        this.overDue = overDue;
+        this.itsOverDated = false;
     }
 
     @Override

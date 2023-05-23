@@ -45,7 +45,15 @@ public class ToolKit {
     }
 
     public int calculateRisk(User user) {
-        return 0;
+        double pesoIngreso = 0.3;
+        double pesoDeudas = 0.2;
+        double pesoHistorial = 0.3;
+        double pesoProductosActuales = 0.2;
+        int puntajeIncial = user.getScore();
+        puntajeIncial += (int) (user.getIncome() * pesoIngreso);
+        puntajeIncial += (int) (user.getDebts() * pesoDeudas);
+
+        return user.getScore();
     }
 
     public int generateCode(VirtualCard card) {
