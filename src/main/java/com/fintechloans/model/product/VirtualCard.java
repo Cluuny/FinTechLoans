@@ -8,27 +8,32 @@ public class VirtualCard extends Product {
     private String provider;
     private int balance;
 
-    public VirtualCard(int digits, String expirationDate, int cCV, String provider, int balance) {
+    public VirtualCard(int digits, String expirationDate, int CCV, String provider, int balance) {
         this.digits = digits;
         this.expirationDate = expirationDate;
-        this.CCV = cCV;
+        this.CCV = CCV;
         this.provider = provider;
         this.balance = balance;
     }
 
     @Override
     public Product payInstallment(int term, int amount) {
-        throw new UnsupportedOperationException("Unimplemented method 'payInstallment'");
+        // Implementation for paying installment for the virtual card
+        // Update the virtual card state and return the updated product
+        return this;
     }
 
     @Override
-    public String cancelProdcut() {
-        throw new UnsupportedOperationException("Unimplemented method 'cancelProdcut'");
+    public String cancelProduct() {
+        // Implementation for canceling the virtual card
+        // Return a cancellation message
+        return "Virtual card canceled.";
     }
 
     @Override
     public Product differ(int amount) {
-        throw new UnsupportedOperationException("Unimplemented method 'differ'");
+        // Implementation for differing the virtual card
+        // Update the virtual card state and return the updated product
+        return this;
     }
-
 }

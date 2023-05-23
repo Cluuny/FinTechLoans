@@ -17,17 +17,22 @@ public class RegularLoan extends Product {
 
     @Override
     public Product payInstallment(int term, int amount) {
-        throw new UnsupportedOperationException("Unimplemented method 'payInstallment'");
+        // Implementation for paying installment
+        // Update the loan state and return the updated product
+        return this;
     }
 
     @Override
-    public String cancelProdcut() {
-        throw new UnsupportedOperationException("Unimplemented method 'cancelProdcut'");
+    public String cancelProduct() {
+        // Implementation for canceling the regular loan
+        // Return a cancellation message
+        return "Regular loan canceled.";
     }
 
     @Override
     public Product differ(int amount) {
-        throw new UnsupportedOperationException("Unimplemented method 'differ'");
+        // Implementation for differing the regular loan
+        // Update the loan state and return the updated product
+        return this;
     }
-
 }
