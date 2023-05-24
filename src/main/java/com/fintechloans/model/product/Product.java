@@ -23,6 +23,13 @@ public abstract class Product {
         this.isOverDue = false;
     }
 
+    public void checkOverdueStatus(LocalDate currentDate) {
+        if (!installments.isEmpty() && currentDate.isAfter(dueDate)) {
+            System.out.println("Installment is overdue. Please pay quickly to avoid being reported to credit bureaus.");
+            isOverDue = true;
+        }
+    }
+
     public double getLoanAmount() {
         return loanAmount;
     }
@@ -39,38 +46,7 @@ public abstract class Product {
         return dueDate;
     }
 
-    public void addInstallment(LocalDate date) {
-        installments.add(date);
-    }
-
-    public void payInstallment(LocalDate date) {
-        if (installments.contains(date)) {
-            System.out.println("Payment received for installment due on " + date);
-            installments.remove(date);
-        } else {
-            System.out.println("No installment due on " + date);
-        }
-    }
-
-    public void payOffLoan() {
-        paidOff = true;
-        System.out.println("Loan has been paid off.");
-    }
-
-    public void deferInstallments(int monthsToDefer) {
-        LocalDate newDueDate = dueDate.plusMonths(monthsToDefer);
-        System.out.println("Installments deferred. New due date is " + newDueDate);
-        dueDate = newDueDate;
-    }
-
-    public void checkOverdueStatus(LocalDate currentDate) {
-        if (!installments.isEmpty() && currentDate.isAfter(dueDate)) {
-            System.out.println("Installment is overdue. Please pay quickly to avoid being reported to credit bureaus.");
-            isOverDue = true;
-        }
-    }
-
-    protected List<LocalDate> getInstallments() {
+    public List<LocalDate> getInstallments() {
         return installments;
     }
 

@@ -60,6 +60,7 @@ public class Presenter {
         String name;
         String email;
         String password;
+        int spendAmount;
         String contractType;
         boolean flag = true;
         while (flag) {
@@ -73,9 +74,11 @@ public class Presenter {
                     age = view.readInt("Porfavor ingrese su edad");
                     contractType = view.readString("Porfavor ingrese su tipo de contrato");
                     income = view.readInt("Porfavor ingrese su salario mensual");
+                    spendAmount = view.readInt(
+                            "Porfavor ingrese el monto con el que cuenta para gestionar su cartera de prestamos: ");
                     debts = view.readInt("Porfavor ingrese el monto monetario de deudas que tiene: ");
                     try {
-                        toolkit.createRegularUSer(name, email, password, age, income, contractType, debts);
+                        toolkit.createRegularUSer(name, email, password, age, income, spendAmount, contractType, debts);
                     } catch (Exception e) {
                         view.print(e.getLocalizedMessage() + "");
                     }
@@ -87,6 +90,8 @@ public class Presenter {
                     age = view.readInt("Porfavor ingrese su edad");
                     contractType = view.readString("Porfavor ingrese su tipo de contrato");
                     income = view.readInt("Porfavor ingrese su salario mensual");
+                    spendAmount = view.readInt(
+                            "Porfavor ingrese el monto con el que cuenta para gestionar su cartera de prestamos: ");
                     debts = view.readInt("Porfavor ingrese el monto monetario de sus deudas: ");
                     String hasGameStast = view.readString("Tiene usted un historial de juego? (y/n)").toLowerCase();
                     ArrayList<Integer> gameStats = new ArrayList<Integer>();
@@ -108,7 +113,8 @@ public class Presenter {
                         }
                     }
                     try {
-                        toolkit.createCasinoUser(name, email, password, age, income, contractType, debts, gameStats);
+                        toolkit.createCasinoUser(name, email, password, age, income, spendAmount, contractType, debts,
+                                gameStats);
                     } catch (Exception e) {
                         view.print(e.getLocalizedMessage() + "");
                     }

@@ -74,10 +74,11 @@ public class ToolKit {
      * @throws Exception
      * 
      */
-    public void createRegularUSer(String name, String email, String password, int age, int income, String contractType,
+    public void createRegularUSer(String name, String email, String password, int age, int income, int spendAmount,
+            String contractType,
             int debts)
             throws Exception {
-        User newUser = new RegularCustomer(name, email, password, age, income, contractType,
+        User newUser = new RegularCustomer(name, email, password, age, income, spendAmount, contractType,
                 debts);
         regularUsersReader = new FileReader(regularUsersPath);
         JsonArray array = jsonMapper.fromJson(regularUsersReader, JsonArray.class);
@@ -102,11 +103,13 @@ public class ToolKit {
      * @return void
      * @throws Exception
      */
-    public void createCasinoUser(String name, String email, String password, int age, int income, String contractType,
+    public void createCasinoUser(String name, String email, String password, int age, int income, int spendAmount,
+            String contractType,
             int debts,
             ArrayList<Integer> gameStast)
             throws Exception {
-        User newUser = new CasinoCustomer(name, email, password, age, income, contractType, debts, gameStast);
+        User newUser = new CasinoCustomer(name, email, password, age, income, spendAmount, contractType, debts,
+                gameStast);
         casinoUsersReader = new FileReader(casinoUsersPath);
         JsonArray array = jsonMapper.fromJson(casinoUsersReader, JsonArray.class);
         array.add(jsonMapper.toJsonTree(newUser));

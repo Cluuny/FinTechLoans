@@ -11,12 +11,7 @@ public class RegularLoan extends Product {
 
     public RegularLoan(double loanAmount, double interestRate, int termInMonths, LocalDate dueDate) {
         super(loanAmount, interestRate, termInMonths, dueDate);
-    }
-
-    @Override
-    public void payInstallment(LocalDate date) {
-        super.payInstallment(date);
-        checkOverdueStatus(LocalDate.now());
+        this.itsOverDated = this.isOverdue();
     }
 
     @Override
