@@ -26,7 +26,9 @@ public class Presenter {
                     try {
                         this.register();
                     } catch (Exception e) {
-                        view.print("Ha ocurrido un error inesperado, porfavor intente de nuevo" + e.getStackTrace());
+                        view.print(
+                                "Ha ocurrido un error inesperado, porfavor intente de nuevo\n" + e.getMessage() + "\n"
+                                        + e.getStackTrace());
                     }
                     break;
                 case 2:
@@ -37,8 +39,9 @@ public class Presenter {
                         User loggedUser = toolkit.logUser(userEmail, userPassword, userType);
                         this.runServices(loggedUser);
                     } catch (Exception e) {
-                        view.print("Ha ocurrido un error inesperado, porfavor intente de nuevo" + e.getStackTrace()
-                                + "\n" + e.getLocalizedMessage());
+                        view.print(
+                                "Ha ocurrido un error inesperado, porfavor intente de nuevo\n" + e.getMessage() + "\n"
+                                        + e.getStackTrace());
                     }
                     break;
                 case 3:
@@ -61,7 +64,7 @@ public class Presenter {
         String email;
         String password;
         int spendAmount;
-        String contractType;
+        int contractType;
         boolean flag = true;
         while (flag) {
             int userOpt = view.readInt(userOptions);
@@ -72,7 +75,8 @@ public class Presenter {
                     email = view.readString("Porfavor ingrese su correo electronico");
                     password = view.readString("ingrese una contraseña para su cuenta");
                     age = view.readInt("Porfavor ingrese su edad");
-                    contractType = view.readString("Porfavor ingrese su tipo de contrato");
+                    contractType = view.readInt(
+                            "Porfavor ingrese su tipo de contrato: \n1. Fromal - termino fijo\n2. Formal - termino indefinido\n3. Informal\n4. Desempleado");
                     income = view.readInt("Porfavor ingrese su salario mensual");
                     spendAmount = view.readInt(
                             "Porfavor ingrese el monto con el que cuenta para gestionar su cartera de prestamos: ");
@@ -88,7 +92,8 @@ public class Presenter {
                     email = view.readString("Porfavor ingrese su correo electronico");
                     password = view.readString("Ingrese una contraseña para su cuenta:");
                     age = view.readInt("Porfavor ingrese su edad");
-                    contractType = view.readString("Porfavor ingrese su tipo de contrato");
+                    contractType = view.readInt(
+                            "Porfavor ingrese su tipo de contrato: \n1. Fromal - termino fijo\n2. Formal - termino indefinido\n3. Informal\n4. Desempleado");
                     income = view.readInt("Porfavor ingrese su salario mensual");
                     spendAmount = view.readInt(
                             "Porfavor ingrese el monto con el que cuenta para gestionar su cartera de prestamos: ");
@@ -132,28 +137,37 @@ public class Presenter {
 
     public void runServices(User user) {
         String runServicesMenu = "Bienvenido, " + user.getName()
-                + "! \nHemos verificado tu identidad!\nAhora porfavor escoge que quieres hacer hoy?\n1. Adquirir productos\n2. Añadir metodos de pago\n3. Pagar productos pendientes\n4. Cerrar sesión y regresar al menu principal";
+                + "! \nHemos verificado tu identidad!\nAhora porfavor escoge que quieres hacer hoy?\n1. Adquirir productos\n2. Pagar productos\n3. Cancelar productos\n4. Diferir producto\n5. Simular paso del tiempo\n6. Visitar mercados\n7. Cerrar sesión y regresar al menu principal";
         int runServicesOpt = view.readInt(runServicesMenu);
         while (runServicesOpt <= 4) {
             switch (runServicesOpt) {
                 case 1:
-                    buyProducts();
+                    // Implementacion de adquisicion de productos
+                    // user.requesLoan
                     break;
                 case 2:
-                    // Implementacion de metodos de pago
+                    // Implementacion de pago de productos
+                    // user.payLoanInstallment
                     break;
                 case 3:
-                    // Implementacion de pago de prestamos
+                    // Implementacion de cancelacion de productos
+                    // user.cancelProduct
                     break;
                 case 4:
+                    // Implementación para diferir productos
+                    // user.deferLoan
+                    break;
+                case 5:
+                    // Implementacion de simulacion de paso del tiempo
+                    break;
+                case 6:
+                    // Implementacion de visita a mercados
+                    break;
+                case 7:
                     runServicesOpt = 5;
                     break;
             }
         }
-    }
-
-    public void buyProducts() {
-        // Unimplemented
     }
 
     public static void main(String[] args) throws Exception {

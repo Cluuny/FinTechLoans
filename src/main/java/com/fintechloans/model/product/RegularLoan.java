@@ -3,15 +3,9 @@ package com.fintechloans.model.product;
 import java.time.LocalDate;
 
 public class RegularLoan extends Product {
-    private int id;
-    private int amount;
-    private int term;
-    private int interestRate;
-    private Boolean itsOverDated;
 
     public RegularLoan(double loanAmount, double interestRate, int termInMonths, LocalDate dueDate) {
         super(loanAmount, interestRate, termInMonths, dueDate);
-        this.itsOverDated = this.isOverdue();
     }
 
     @Override

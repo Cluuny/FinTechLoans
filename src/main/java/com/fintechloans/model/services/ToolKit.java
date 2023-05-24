@@ -2,10 +2,10 @@ package com.fintechloans.model.services;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.fintechloans.exceptions.UserNotFoundException;
-import com.fintechloans.model.product.VirtualCard;
 import com.fintechloans.model.user.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -41,23 +41,13 @@ public class ToolKit {
     public ToolKit() throws Exception {
         regularUsersPath = "src/main/java/com/fintechloans/data/regularUsers.json";
         casinoUsersPath = "src/main/java/com/fintechloans/data/casinoUsers.json";
-        jsonMapper = new Gson();
+        jsonMapper = new GsonBuilder().registerTypeAdapter(LocalDate.class, new GsonLocalDateAdapter()).create();
     }
 
-    public int calculateRisk(User user) {
-        double pesoIngreso = 0.3;
-        double pesoDeudas = 0.2;
-        double pesoHistorial = 0.3;
-        double pesoProductosActuales = 0.2;
-        int puntajeIncial = user.getScore();
-        puntajeIncial += (int) (user.getIncome() * pesoIngreso);
-        puntajeIncial += (int) (user.getDebts() * pesoDeudas);
-
-        return user.getScore();
-    }
-
-    public int generateCode(VirtualCard card) {
-        return 0;
+    public void merchantManagment(String merchantName, User user) {
+        // Trabajo con mercados JSON
+        // Verificar si es aliado o no
+        // Generar prestamo
     }
 
     /**
@@ -75,7 +65,7 @@ public class ToolKit {
      * 
      */
     public void createRegularUSer(String name, String email, String password, int age, int income, int spendAmount,
-            String contractType,
+            int contractType,
             int debts)
             throws Exception {
         User newUser = new RegularCustomer(name, email, password, age, income, spendAmount, contractType,
@@ -104,7 +94,7 @@ public class ToolKit {
      * @throws Exception
      */
     public void createCasinoUser(String name, String email, String password, int age, int income, int spendAmount,
-            String contractType,
+            int contractType,
             int debts,
             ArrayList<Integer> gameStast)
             throws Exception {
@@ -126,9 +116,10 @@ public class ToolKit {
      * @param password
      * @param userType
      * @return User
-     * @throws Exception
+     * @throws UserNotFoundException
+     * @trhows Exception
      */
-    public User logUser(String email, String password, int userType) throws Exception {
+    public User logUser(String email, String password, int userType) throws UserNotFoundException, Exception {
         JsonArray jsonAccounts;
         ArrayList<User> arrAccounts;
         User loggedUser;
