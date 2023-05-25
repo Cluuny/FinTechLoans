@@ -113,6 +113,7 @@ public abstract class User {
      * @return Booelan
      */
     public boolean requestLoan(int amount, int term, LocalDate generationDate) {
+        // ESTA LINEA ES DE TESTEO
         // Este metodo se basa en el score y en el amount que se recibe como parametro
         // Si el usuario tiene un score mayor a 600 se le permite el prestamo, en caso
         // contrario se le presta menos de lo que pide
