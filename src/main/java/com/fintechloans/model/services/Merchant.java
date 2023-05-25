@@ -5,7 +5,7 @@ public class Merchant {
     private Boolean isAllied;
     private String merchantName;
 
-    public Merchant(Boolean isAllied, String merchantName, int merchantItems) {
+    public Merchant(Boolean isAllied, String merchantName) {
         this.isAllied = isAllied;
         this.merchantName = merchantName;
     }

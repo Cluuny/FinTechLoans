@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import com.fintechloans.exceptions.MerchantNotAllied;
 import com.fintechloans.exceptions.UserNotFoundException;
 import com.fintechloans.model.user.*;
 import com.google.gson.*;
@@ -33,20 +34,25 @@ public class ToolKit {
 
     private String regularUsersPath;
     private String casinoUsersPath;
+    private String merchantsPath;
     private Gson jsonMapper;
     private FileReader regularUsersReader;
     private FileReader casinoUsersReader;
+    private FileReader merchantsReader;
     private FileWriter writer;
 
     public ToolKit() throws Exception {
         regularUsersPath = "src/main/java/com/fintechloans/data/regularUsers.json";
         casinoUsersPath = "src/main/java/com/fintechloans/data/casinoUsers.json";
-        jsonMapper = new GsonBuilder().registerTypeAdapter(LocalDate.class, new GsonLocalDateAdapter()).create();
+        merchantsPath = "src/main/java/com/fintechloans/data/merchants.json";
+        jsonMapper = new GsonBuilder().registerTypeAdapter(LocalDate.class, new GsonLocalDateAdapter())
+                .create();
     }
 
-    public void merchantManagment(String merchantName, User user) {
-        // Trabajo con mercados JSON
-        // Verificar si es aliado o no
+    public void merchantManagment(String merchantName, User user) throws Exception, MerchantNotAllied {
+        merchantsReader = new FileReader(merchantsPath);
+        JsonArray merchantJsonArray = jsonMapper.fromJson(merchantsReader, JsonArray.class);
+        // TODO: Verificar si es aliado o no.
         // Generar prestamo
     }
 
