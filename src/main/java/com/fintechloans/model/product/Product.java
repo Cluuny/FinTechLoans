@@ -18,15 +18,15 @@ public abstract class Product {
     private boolean paidOff;
     private boolean isOverDue;
 
-    public Product(double loanAmount, double interestRate, int termInMonths, LocalDate starDate) {
+    public Product(double loanAmount, double interestRate, int termInMonths, LocalDate dueDate) {
         this.id = (int) Math.random() * 1000;
         this.loanAmount = loanAmount;
         this.interestRate = interestRate;
         this.termInMonths = termInMonths;
         this.monthlyPayment = this.calculateMonthlyPayment();
-        this.startDate = starDate;
-        this.dueDate = startDate.plusMonths(1);
-        this.installments = new ArrayList<LocalDate>();
+        // this.dueDate = startDate.plusMonths(1);
+        // Implementar logica de creación de fechas
+        this.installments = new ArrayList<>();
         this.generateInstallments();
         this.paidOff = false;
         this.isOverDue = false;
@@ -42,9 +42,8 @@ public abstract class Product {
 
     // Metodo para generar fechas de installments
     public void generateInstallments() {
-        this.installments.add(this.dueDate);
         for (int i = 1; i <= termInMonths; i++) {
-            this.installments.add(this.dueDate.plusMonths(i));
+            this.installments.add(dueDate.plusMonths(i));
         }
     }
 

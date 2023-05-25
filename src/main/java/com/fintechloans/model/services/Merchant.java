@@ -2,6 +2,7 @@ package com.fintechloans.model.services;
 
 public class Merchant {
 
+    //Implementar interfaz merchant
     private Boolean isAllied;
     private String merchantName;
 
