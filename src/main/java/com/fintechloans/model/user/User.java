@@ -54,22 +54,6 @@ public abstract class User {
         this.products = new ArrayList<Product>();
     }
 
-    // Si gana entre 1.160.000y 1.500.000
-    // se queda
-    // quieto. Si está entre 1.500.000y 2.200.000
-    // se le suben 50
-    // puntos. Si está entre 2.200.000y 4.000.000
-    // se le suben 100
-    // puntos. SI está entre 4.000.000y 10.000.000
-    // se le suben 200 puntos,
-    // si gana
-    // más de eso 250 puntos
-    // SI tiene un contrato por termino fijo o indefinido se le suben 50 puntos, si
-    // tiene cualquier otro tipo de contrato no se sube nada
-    // si los ingresos - las deudas son negativos se le restan 50 puntos, si los
-    // ingresos - las deudas van entre 0 - 1.000.000 no se hace nada, si van de
-    // 1.000.000 a 5.000.000 subirle 50 puntos y si ingresos - deudas da más de
-    // 5.000.000 subirle 100 puntos
     private int calculateRisk() {
         int score = 400;
         // Verificaciones de eddad
@@ -128,8 +112,12 @@ public abstract class User {
      * @param amount
      * @return Booelan
      */
-    public boolean requestLoan(int amount) {
-        // Implementar logica de adquisición de prestamos
+    public boolean requestLoan(int amount, int term, LocalDate generationDate) {
+        // ESTA LINEA ES DE TESTEO
+        // Este metodo se basa en el score y en el amount que se recibe como parametro
+        // Si el usuario tiene un score mayor a 600 se le permite el prestamo, en caso
+        // contrario se le presta menos de lo que pide
+        // Crear un producto con sus propiedades y sus datos
         return false;
     }
 
