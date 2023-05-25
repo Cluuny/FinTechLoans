@@ -8,7 +8,7 @@ import com.fintechloans.model.product.Product;
 public abstract class User {
     /**
      * Atributos de la clase User
-     * 
+     *
      * @param name         Nombre del usuario
      * @param email        Correo electronico del usuario
      * @param password     Contraseña del usuario
@@ -27,7 +27,7 @@ public abstract class User {
      * @param debts        Deudas del usuario
      * @param score        Puntaje del usuario
      * @param products     Productos del usuario
-     * 
+     *
      */
     private String name;
     private String email;
@@ -108,7 +108,7 @@ public abstract class User {
 
     /**
      * Metodo que permite al usuario solicitar un prestamo
-     * 
+     *
      * @param amount
      * @return Booelan
      */
@@ -126,20 +126,44 @@ public abstract class User {
      *
      * @param date
      * @param product
+     * @return
      */
-    public void payLoanInstallment(LocalDate date, Product product) {
+    public String payLoanInstallment(LocalDate date, Product product) {
         ArrayList<LocalDate> installments = (ArrayList<LocalDate>) product.getInstallments();
+        double installmentAmount = product.getMonthlyPayment();
+        String message;
+
         if (installments.contains(date)) {
-            System.out.println("Payment received for installment due on " + date);
-            installments.remove(date);
+            if (spendAmount >= installmentAmount) {
+                message = "Payment received successfully for the date: " + date;
+                installments.remove(date);
+                spendAmount -= installmentAmount;
+
+                // El siguiente if else statement actualiza la variable remainingBalance
+                // para poder manejar un método cancell con un balance para hacerle payoff al loan
+                double remainingBalance = product.getRemainingBalance();
+                if (remainingBalance >= installmentAmount) {
+                    remainingBalance -= installmentAmount;
+                    product.setRemainingBalance(remainingBalance);
+                } else {
+                    product.setRemainingBalance(0);
+                    product.setPaidOff(true);
+                }
+            } else {
+                message = "Insufficient funds to pay the installment due on: " + date;
+            }
         } else {
-            System.out.println("No installment due on " + date);
+            message = "No pending payments for the date: " + date;
         }
+        return message;
     }
+
+
+
 
     /**
      * Metodo que permite al usuario diferir en mas cuotas un prestamo
-     * 
+     *
      * @param product
      * @param term
      * @return
@@ -151,14 +175,25 @@ public abstract class User {
 
     /**
      * Metodo que permite al usuario cancelar en su totalidad un producto
-     * 
+     *
      * @param product
      * @return
      */
     public boolean cancelProduct(Product product) {
-        // Implementar logica de cancelar productos
-        return false;
+        if (products.contains(product)) {
+            double remainingBalance = product.getRemainingBalance();
+            if (spendAmount >= remainingBalance) {
+                spendAmount -= remainingBalance;
+                products.remove(product);
+                return true;
+            } else {
+                return false; // El usuario no tiene plata para pagar el prestamo
+            }
+        } else {
+            return false; // Producto no se encuentra en la lista de productos del usuario
+        }
     }
+
 
     // Listar pagos pendientes con fechas
     public String listPendingInstallments(Product product) {
@@ -169,7 +204,7 @@ public abstract class User {
 
     /**
      * Getters y Setters de la clase
-     * 
+     *
      * @return
      */
     public abstract String getInfo();

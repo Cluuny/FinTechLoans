@@ -9,6 +9,7 @@ public abstract class Product {
     private double loanAmount;
     private double interestRate;
     private int termInMonths;
+    private double remainingBalance;
     private double monthlyPayment;
     // Pendiente revisión de fechas
     private LocalDate startDate;
@@ -31,6 +32,7 @@ public abstract class Product {
         this.generateInstallments();
         this.paidOff = false;
         this.isOverDue = false;
+        this.remainingBalance = loanAmount;
     }
 
     // Abstraer metodos
@@ -92,6 +94,17 @@ public abstract class Product {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+    public void setPaidOff(boolean paidOff) {
+        this.paidOff = paidOff;
+    }
+
+    public double getRemainingBalance() {
+        return remainingBalance;
+    }
+
+    public void setRemainingBalance(double remainingBalance) {
+        this.remainingBalance = remainingBalance;
     }
 
     public boolean isOverDue() {
