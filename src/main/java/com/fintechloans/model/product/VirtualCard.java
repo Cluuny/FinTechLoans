@@ -19,10 +19,15 @@ public class VirtualCard extends Product {
      * Atributos de la clase VirtualCard
      * 
      * @param code Código de la tarjeta virtual
+     * 
      * @param cardHolder Nombre del titular de la tarjeta
+     * 
      * @param cvv Código de seguridad de la tarjeta
+     * 
      * @param codes ArrayList que contiene los códigos de las tarjetas virtuales
+     * 
      * @param expirationDate Fecha de expiración de la tarjeta
+     * 
      * @param formatter Objeto DateTimeFormatter que permite dar formato a la fecha
      * de expiración
      */
@@ -32,14 +37,14 @@ public class VirtualCard extends Product {
     private ArrayList<String> codes = new ArrayList<>();
     LocalDate expirationDate;
     DateTimeFormatter formatter;
-    
 
     public VirtualCard(double loanAmount, double interestRate, int termInMonths, LocalDate dueDate) {
         super(loanAmount, interestRate, termInMonths, dueDate);
     }
 
-    /** 
+    /**
      * Clase que permite generar un código de 16 dígitos aleatorios
+     * 
      * @return String
      */
     public String generateCode() {
@@ -50,9 +55,9 @@ public class VirtualCard extends Product {
         return "Su código es: " + code;
     }
 
-    
-    /** 
+    /**
      * Clase que genera múltiples códigos de tarjetas virtuales
+     * 
      * @param count
      * @return ArrayList<String>
      */
@@ -64,7 +69,7 @@ public class VirtualCard extends Product {
         return codes;
     }
 
-    /** 
+    /**
      * Clase que compara las tarjetas virtuales para verificar que no se repitan
      */
     public void checkDuplicateCreditCardNumbers() {
@@ -79,7 +84,7 @@ public class VirtualCard extends Product {
         }
     }
 
-    /** 
+    /**
      * Clase que genera un código de seguridad de 3 dígitos aleatorios
      */
     public void generateCvv() {
@@ -89,7 +94,7 @@ public class VirtualCard extends Product {
         setCvv(cvv);
     }
 
-    /** 
+    /**
      * Clase que genera la fecha de expiración de la tarjeta virtual
      */
     public void generateExpirationDate() {
@@ -103,7 +108,9 @@ public class VirtualCard extends Product {
      */
 
     public String getVirtualCardInfo(String cardHolder) {
-        return "!Hola " + this.cardHolder + " se ha creado su tarjeta virtual! \n Su código es: " + this.getCode() + " \n Su CVV es: " + this.getCvv() + " \n La fecha de expiración es: " + this.getExpirationDate().format(formatter);
+        return "!Hola " + this.cardHolder + " se ha creado su tarjeta virtual! \n Su código es: " + this.getCode()
+                + " \n Su CVV es: " + this.getCvv() + " \n La fecha de expiración es: "
+                + this.getExpirationDate().format(formatter);
     }
 
     public String getCardHolder() {

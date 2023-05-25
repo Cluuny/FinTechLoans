@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.fintechloans.model.product.Product;
+import com.fintechloans.model.services.ToolKit;
 
 public abstract class User {
     /**
@@ -39,8 +40,15 @@ public abstract class User {
     private int debts;
     private int score;
     private ArrayList<Product> products;
+    private ToolKit toolKit = new ToolKit();
 
-    public User(String name, String email, String password, int age, int income, int spendAmount, int contractType,
+    public User(
+            String name, String email,
+            String password,
+            int age,
+            int income,
+            int spendAmount,
+            int contractType,
             int debts) {
         this.name = name;
         this.email = email;
@@ -118,6 +126,7 @@ public abstract class User {
         // Si el usuario tiene un score mayor a 600 se le permite el prestamo, en caso
         // contrario se le presta menos de lo que pide
         // Crear un producto con sus propiedades y sus datos
+        toolKit.updateJsonInfo(this);
         return false;
     }
 
@@ -210,6 +219,16 @@ public abstract class User {
      * @return
      */
     public abstract String getInfo();
+
+    public int getUserType() {
+        if (this instanceof RegularCustomer) {
+            return 1;
+        } else if (this instanceof CasinoCustomer) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
 
     public String getName() {
         return name;

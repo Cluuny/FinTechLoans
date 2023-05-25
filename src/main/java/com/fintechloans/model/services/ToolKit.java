@@ -5,8 +5,7 @@ import java.io.FileWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import com.fintechloans.exceptions.MerchantNotAllied;
-import com.fintechloans.exceptions.UserNotFoundException;
+import com.fintechloans.exceptions.*;
 import com.fintechloans.model.user.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -41,7 +40,7 @@ public class ToolKit {
     private FileReader merchantsReader;
     private FileWriter writer;
 
-    public ToolKit() throws Exception {
+    public ToolKit() {
         regularUsersPath = "src/main/java/com/fintechloans/data/regularUsers.json";
         casinoUsersPath = "src/main/java/com/fintechloans/data/casinoUsers.json";
         merchantsPath = "src/main/java/com/fintechloans/data/merchants.json";
@@ -51,13 +50,22 @@ public class ToolKit {
 
     public void merchantManagment(String merchantName, User user) throws Exception, MerchantNotAllied {
         merchantsReader = new FileReader(merchantsPath);
-        JsonArray merchantJsonArray = jsonMapper.fromJson(merchantsReader, JsonArray.class);
-        // TODO: Verificar si es aliado o no.
-        // Generar prestamo
+        ArrayList<Merchant> merchantJsonArray = jsonMapper.fromJson(merchantsReader,
+                new TypeToken<ArrayList<Merchant>>() {
+                }.getType());
+        for (Merchant merchant : merchantJsonArray) {
+            if (!merchant.getMerchantName().equals(merchantName)) {
+                throw new MerchantNotAllied();
+            } else {
+                // Implementar metodo de compra
+            }
+        }
     }
 
     /**
-     * Metodo que permite crear un usuario regular y guardarlo en el archivo JSON
+     * Metodo que permite crear un usuario regular y guardarlo en el archivo JSON,
+     * esto se realiza obteniendo la lista guardad dentro del json, agregand el
+     * nuevo usuario y sobreescribiendo el archivo.
      * 
      * @param name
      * @param email
@@ -86,7 +94,9 @@ public class ToolKit {
     }
 
     /**
-     * Metodo que permite crear un usuario de casino y guardarlo en el archivo JSON
+     * Metodo que permite crear un usuario de casino y guardarlo en el archivo
+     * JSON, esto se realiza obteniendo la lista guardad dentro del json,
+     * agregando el nuevo usuario y sobreescribiendo el archivo.
      * 
      * @param name
      * @param email
@@ -116,7 +126,11 @@ public class ToolKit {
     }
 
     /**
-     * Metodo que permite loguear un usuario
+     * Metodo que permite loguear un usuario, esto se logra obteniendo la lista de
+     * usuarios correspondiente al tipo de usuario que se desea loguear, luego se
+     * filtra la lista para obtener el usuario que coincida con el email y la
+     * contraseña ingresada, finalmente se retorna dicho usuario para que se pueda
+     * realizar las tareas en el presentador.
      * 
      * @param email
      * @param password
@@ -126,28 +140,68 @@ public class ToolKit {
      * @trhows Exception
      */
     public User logUser(String email, String password, int userType) throws UserNotFoundException, Exception {
-        JsonArray jsonAccounts;
-        ArrayList<User> arrAccounts;
+        ArrayList<User> jsonAccounts;
         User loggedUser;
         switch (userType) {
             case 1:
                 regularUsersReader = new FileReader(regularUsersPath);
-                jsonAccounts = jsonMapper.fromJson(regularUsersReader, JsonArray.class).getAsJsonArray();
-                arrAccounts = jsonMapper.fromJson(jsonAccounts, new TypeToken<ArrayList<RegularCustomer>>() {
+                jsonAccounts = jsonMapper.fromJson(regularUsersReader, new TypeToken<ArrayList<RegularCustomer>>() {
                 }.getType());
                 break;
             case 2:
                 casinoUsersReader = new FileReader(casinoUsersPath);
-                jsonAccounts = jsonMapper.fromJson(casinoUsersReader, JsonArray.class).getAsJsonArray();
-                arrAccounts = jsonMapper.fromJson(jsonAccounts, new TypeToken<ArrayList<CasinoCustomer>>() {
+                jsonAccounts = jsonMapper.fromJson(casinoUsersReader, new TypeToken<ArrayList<CasinoCustomer>>() {
                 }.getType());
                 break;
             default:
                 throw new UserNotFoundException();
         }
-        loggedUser = arrAccounts.stream().filter((account) -> {
+        loggedUser = jsonAccounts.stream().filter((account) -> {
             return account.getEmail().equals(email) && account.getPassword().equals(password);
         }).findFirst().get();
         return loggedUser;
+    }
+
+    /**
+     * Metodo para actualizar la información del usuario en el Json, este metodo
+     * obtiene la lista de usuarios correspondiente al tipo de usuario especificado,
+     * luego filtra el usuario en cuestión, lo elimina y agrega la versión
+     * actualizada de ese mismo usuario.
+     * 
+     * @param userToUpdate
+     * @return void
+     * @throws UserNotFoundException
+     * @throws Exception
+     */
+    public void updateJsonInfo(User userToUpdate) {
+        ArrayList<User> jsonAccounts;
+        try {
+            switch (userToUpdate.getUserType()) {
+                case 1:
+                    regularUsersReader = new FileReader(regularUsersPath);
+                    jsonAccounts = jsonMapper.fromJson(regularUsersReader, new TypeToken<ArrayList<RegularCustomer>>() {
+                    }.getType());
+                    break;
+                case 2:
+                    casinoUsersReader = new FileReader(casinoUsersPath);
+                    jsonAccounts = jsonMapper.fromJson(casinoUsersReader, new TypeToken<ArrayList<CasinoCustomer>>() {
+                    }.getType());
+                    break;
+                default:
+                    throw new UserNotFoundException();
+            }
+            jsonAccounts.removeIf((account) -> {
+                return account.getEmail().equals(userToUpdate.getEmail());
+            });
+            jsonAccounts.add(userToUpdate);
+            writer = new FileWriter(regularUsersPath, false);
+            writer.write(jsonMapper.toJson(jsonAccounts));
+            writer.flush();
+            writer.close();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
