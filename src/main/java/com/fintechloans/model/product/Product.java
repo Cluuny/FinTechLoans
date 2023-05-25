@@ -80,6 +80,10 @@ public abstract class Product {
         return dueDate;
     }
 
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
     public double getMonthlyPayment() {
         return monthlyPayment;
     }

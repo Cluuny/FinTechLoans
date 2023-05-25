@@ -159,18 +159,20 @@ public abstract class User {
     }
 
 
-
-
     /**
-     * Metodo que permite al usuario diferir en mas cuotas un prestamo
+     * Metodo que permite al usuario diferir en más cuotas un prestamo Aumentando la fecha de vencimiento
+     * del prestamo y generando las cuotas correspondientes
      *
      * @param product
      * @param term
-     * @return
+     * @return String
      */
-    public boolean deferLoan(Product product, int term) {
+    public String deferLoan(Product product, int term) {
         // Implementar logica de diferir prestamos
-        return false;
+        LocalDate newDueDate = product.getDueDate().plusMonths(term);
+        product.setDueDate(newDueDate);
+        product.generateInstallments();
+        return "Se ha ampliado la fecha de su prestamo satisfactoriamente";
     }
 
     /**
