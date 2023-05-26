@@ -2,6 +2,7 @@ package com.fintechloans.presenter;
 
 import com.fintechloans.view.View;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.fintechloans.model.services.ToolKit;
@@ -142,8 +143,9 @@ public class Presenter {
         while (runServicesOpt <= 4) {
             switch (runServicesOpt) {
                 case 1:
-                    // Implementacion de adquisicion de productos
-                    // user.requesLoan
+                    double amount = view.readDouble("Ingresa el monto para tu prestamo: ");
+                    int term = view.readInt("Ingresa el numero de cuotas: ");
+                    user.requestLoan(amount, term, LocalDate.now());
                     break;
                 case 2:
                     // Implementacion de pago de productos

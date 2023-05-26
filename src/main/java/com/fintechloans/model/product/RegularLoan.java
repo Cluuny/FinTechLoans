@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class RegularLoan extends Product {
 
-    public RegularLoan(double loanAmount, double interestRate, int termInMonths, LocalDate dueDate) {
-        super(loanAmount, interestRate, termInMonths, dueDate);
+    public RegularLoan(double loanAmount, int termInMonths, LocalDate dueDate) {
+        super(loanAmount, termInMonths, dueDate);
     }
 
     @Override

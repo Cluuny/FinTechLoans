@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.fintechloans.model.product.Product;
+import com.fintechloans.model.product.RegularLoan;
 
 public abstract class User {
     /**
@@ -112,13 +113,41 @@ public abstract class User {
      * @param amount
      * @return Booelan
      */
-    public boolean requestLoan(int amount, int term, LocalDate generationDate) {
-        // ESTA LINEA ES DE TESTEO
-        // Este metodo se basa en el score y en el amount que se recibe como parametro
-        // Si el usuario tiene un score mayor a 600 se le permite el prestamo, en caso
-        // contrario se le presta menos de lo que pide
-        // Crear un producto con sus propiedades y sus datos
-        return false;
+    public boolean requestLoan(double amount, int term, LocalDate generationDate) {
+        if (score >= 600) {
+            // Allow the loan request
+            Product loan = new RegularLoan(amount, term, generationDate);
+            products.add(loan);
+            spendAmount += amount;
+
+            double monthlyPayment = loan.calculateMonthlyPayment();
+            loan.setMonthlyPayment(monthlyPayment);
+
+            loan.generateInstallments();
+
+            loan.setRemainingBalance(amount);
+
+            return true;
+        } else {
+            // Grant a loan amount less than requested
+            int grantedAmount = score / 2;
+            if (grantedAmount > 0) {
+                Product loan = new RegularLoan(grantedAmount, term, generationDate);
+                products.add(loan);
+                spendAmount += grantedAmount;
+
+                double monthlyPayment = loan.calculateMonthlyPayment();
+                loan.setMonthlyPayment(monthlyPayment);
+
+                loan.generateInstallments();
+
+                loan.setRemainingBalance(grantedAmount);
+
+                return true;
+            } else {
+                return false; // User is not eligible for a loan
+            }
+        }
     }
 
     /**
@@ -168,12 +197,32 @@ public abstract class User {
      * @return String
      */
     public String deferLoan(Product product, int term) {
-        // Implementar logica de diferir prestamos
-        LocalDate newDueDate = product.getDueDate().plusMonths(term);
+        int maxExtensionMonths = 3;
+        if (term > maxExtensionMonths) {
+            return "Unable to defer loan for more than " + maxExtensionMonths + " months.";
+        }
+
+        LocalDate originalDueDate = product.getDueDate();
+        LocalDate newDueDate = originalDueDate.plusMonths(term);
+        LocalDate currentDate = LocalDate.now();
+
+        if (newDueDate.isBefore(currentDate)) {
+            return "Unable to defer loan to a past date.";
+        }
+
+        if (newDueDate.isBefore(originalDueDate)) {
+            return "Unable to defer loan to an earlier date.";
+        }
+
+        if (newDueDate.isEqual(originalDueDate)) {
+            return "Loan due date remains unchanged.";
+        }
+
         product.setDueDate(newDueDate);
         product.generateInstallments();
-        return "Se ha ampliado la fecha de su prestamo satisfactoriamente";
+        return "The due date of your loan has been extended successfully.";
     }
+
 
     /**
      * Metodo que permite al usuario cancelar en su totalidad un producto
@@ -196,13 +245,6 @@ public abstract class User {
         }
     }
 
-
-    // Listar pagos pendientes con fechas
-    public String listPendingInstallments(Product product) {
-        // Implementar logica para listar pagos pendientes del producto
-        String pendingInstallments = "";
-        return pendingInstallments;
-    }
 
     /**
      * Getters y Setters de la clase

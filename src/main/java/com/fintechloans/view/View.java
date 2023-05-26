@@ -30,6 +30,18 @@ public class View {
       return this.readString(message);
     }
   }
+  public double readDouble(String message) {
+    System.out.println(message);
+    double input = 0;
+    try {
+      sc = new Scanner(System.in);
+      input = sc.nextDouble();
+      return input;
+    } catch (Exception e) {
+      System.out.println("Error de tipo: " + e.getMessage() + " porfavor ingrese una cadena de caracteres valida.");
+      return this.readDouble(message);
+    }
+  }
 
   public void print(String message) {
     System.out.println(message);
