@@ -4,9 +4,11 @@ import com.fintechloans.view.View;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.fintechloans.model.services.ToolKit;
 import com.fintechloans.model.user.User;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class Presenter {
     private View view;
@@ -29,7 +31,7 @@ public class Presenter {
                     } catch (Exception e) {
                         view.print(
                                 "Ha ocurrido un error inesperado, porfavor intente de nuevo\n" + e.getMessage() + "\n"
-                                        + e.getStackTrace());
+                                        + Arrays.toString(e.getStackTrace()));
                     }
                     break;
                 case 2:
@@ -145,7 +147,7 @@ public class Presenter {
             switch (runServicesOpt) {
                 case 1:
                     double amount = view.readDouble("Ingresa el monto para tu prestamo: ");
-                    int term = view.readInt("Ingresa el numero de cuotas en las que puedes pagar: ");
+                    int term = view.readInt("Ingresa el numero de cuotas: ");
                     boolean response = user.requestLoan(amount, term, LocalDate.now());
                     view.print(response ? "Su solicitud ha sido aprobada" : "Su solicitud ha sido rechazada");
                     break;
