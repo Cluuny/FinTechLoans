@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.fintechloans.model.product.Product;
-import com.fintechloans.model.product.RegularLoan;
 
 public abstract class User {
     /**
