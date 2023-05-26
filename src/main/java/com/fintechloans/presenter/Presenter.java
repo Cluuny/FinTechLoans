@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import com.fintechloans.model.product.Product;
 import com.fintechloans.model.services.ToolKit;
+import com.fintechloans.model.user.RegularCustomer;
 import com.fintechloans.model.user.User;
 
 public class Presenter {
@@ -163,10 +164,12 @@ public class Presenter {
                     view.print(responString);
                     break;
                 case 3:
-                    view.print("Fecha actual: " + actuLocalDate);
-                    view.print("Simulando paso del tiempo...");
-                    actuLocalDate = actuLocalDate.plusMonths(1);
-                    view.print("Simulando completa." + "\n" + "Fecha actual: " + actuLocalDate);
+                    if (user instanceof RegularCustomer) {
+                        view.print("Fecha actual: " + actuLocalDate);
+                        view.print("Simulando paso del tiempo...");
+                        actuLocalDate = actuLocalDate.plusMonths(1);
+                        view.print("Simulando completa." + "\n" + "Fecha actual: " + actuLocalDate);
+                    }
                     productId = view.readInt("Ingresa el id del producto que deseas pagar: ");
                     product = toolkit.getProductById(productId, user);
                     String responseToPay = user.payLoanInstallment(actuLocalDate, product);

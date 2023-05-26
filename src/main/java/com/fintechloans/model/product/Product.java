@@ -1,9 +1,12 @@
 package com.fintechloans.model.product;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import com.fintechloans.model.user.RegularCustomer;
 
 public abstract class Product {
     protected int id;
@@ -31,7 +34,10 @@ public abstract class Product {
         this.paidOff = false;
         this.isOverDue = false;
         this.remainingBalance = loanAmount;
-        this.id = generateRandomId();
+        this.id =
+
+                generateRandomId();
+
     }
 
     // Abstraer metodos

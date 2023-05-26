@@ -3,12 +3,33 @@
     "name": "Vicente Matallana",
     "email": "si",
     "password": "no",
-    "age": 20,
+    "age": 35,
     "income": 4500000,
-    "spendAmount": 1499999,
+    "spendAmount": 1000000,
     "contractType": 1,
-    "debts": 250000,
-    "score": 750,
-    "products": []
+    "debts": 500000,
+    "score": 850,
+    "products": [
+      {
+        "id": 669,
+        "loanAmount": 1000000.0,
+        "interestRate": 0.05,
+        "termInMonths": 6,
+        "remainingBalance": 1000000.0,
+        "monthlyPayment": 8333.333333333334,
+        "startDate": "2023-05-26",
+        "dueDate": "2023-06-26",
+        "installments": [
+          "2023-06-26",
+          "2023-07-26",
+          "2023-08-26",
+          "2023-09-26",
+          "2023-10-26",
+          "2023-11-26"
+        ],
+        "paidOff": false,
+        "isOverDue": false
+      }
+    ]
   }
 ]

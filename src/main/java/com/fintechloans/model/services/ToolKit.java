@@ -180,11 +180,13 @@ public class ToolKit {
         try {
             switch (userToUpdate.getUserType()) {
                 case 1:
+                    System.out.println("Regular");
                     regularUsersReader = new FileReader(regularUsersPath);
                     jsonAccounts = jsonMapper.fromJson(regularUsersReader, new TypeToken<ArrayList<RegularCustomer>>() {
                     }.getType());
                     break;
                 case 2:
+                    System.out.println("Casino");
                     casinoUsersReader = new FileReader(casinoUsersPath);
                     jsonAccounts = jsonMapper.fromJson(casinoUsersReader, new TypeToken<ArrayList<CasinoCustomer>>() {
                     }.getType());
@@ -196,7 +198,11 @@ public class ToolKit {
                 return account.getEmail().equals(userToUpdate.getEmail());
             });
             jsonAccounts.add(userToUpdate);
-            writer = new FileWriter(regularUsersPath, false);
+            if (userToUpdate.getUserType() == 1) {
+                writer = new FileWriter(regularUsersPath, false);
+            } else {
+                writer = new FileWriter(casinoUsersPath, false);
+            }
             writer.write(jsonMapper.toJson(jsonAccounts));
             writer.flush();
             writer.close();

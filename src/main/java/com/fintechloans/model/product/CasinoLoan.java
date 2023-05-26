@@ -9,8 +9,8 @@ public class CasinoLoan extends Product {
 
     public CasinoLoan(double loanAmount, int termInHours, LocalDate startDate) {
         super(loanAmount, termInHours, LocalDate.from(startDate));
+        this.setDueDate(startDate);
     }
-
 
     @Override
     public void generateInstallments() {
@@ -22,14 +22,14 @@ public class CasinoLoan extends Product {
         }
     }
 
-
     @Override
     public String checkOverdueStatus(LocalDate currentDate) {
         String message = null;
         LocalDateTime currentDateTime = currentDate.atStartOfDay();
         if (!installments.isEmpty() && currentDateTime.isAfter(dueDate.atStartOfDay())) {
             long hoursLate = Duration.between(dueDate.atStartOfDay(), currentDateTime).toHours();
-            message = "El pago está tarde en  " + hoursLate + " horas. Pague lo antes posible para evitar ser reportado a centrales de riesgo";
+            message = "El pago está tarde en  " + hoursLate
+                    + " horas. Pague lo antes posible para evitar ser reportado a centrales de riesgo";
             isOverDue = true;
         }
         return message;

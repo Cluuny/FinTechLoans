@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "gameStats": [12, 32, 43, 23],
+    "name": "El apostador",
+    "email": "ela",
+    "password": "12",
+    "age": 46,
+    "income": 2000000,
+    "spendAmount": 50000,
+    "contractType": 1,
+    "debts": 600000,
+    "score": 850,
+    "products": [
+      {
+        "id": 142,
+        "loanAmount": 50000.0,
+        "interestRate": 0.05,
+        "termInMonths": 1,
+        "remainingBalance": 50000.0,
+        "monthlyPayment": 50003.472222204604,
+        "startDate": "2023-05-26",
+        "dueDate": "2023-06-26",
+        "installments": ["2023-05-26", "2023-05-26"],
+        "paidOff": false,
+        "isOverDue": false
+      }
+    ]
+  }
+]

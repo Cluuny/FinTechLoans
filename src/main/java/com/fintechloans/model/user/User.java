@@ -30,16 +30,16 @@ public abstract class User {
      * @param products     Productos del usuario
      *
      */
-    private String name;
-    private String email;
-    private String password;
-    private int age;
-    private int income;
-    private int spendAmount;
-    private int contractType;
-    private int debts;
-    private int score;
-    private ArrayList<RegularLoan> products;
+    protected String name;
+    protected String email;
+    protected String password;
+    protected int age;
+    protected int income;
+    protected int spendAmount;
+    protected int contractType;
+    protected int debts;
+    protected int score;
+    protected ArrayList<Product> products;
 
     public User(
             String name, String email,
@@ -58,60 +58,10 @@ public abstract class User {
         this.contractType = contractType;
         this.debts = debts;
         this.score = this.calculateRisk();
-        this.products = new ArrayList<RegularLoan>();
+        this.products = new ArrayList<Product>();
     }
 
-    private int calculateRisk() {
-        int score = 400;
-        // Verificaciones de eddad
-        int age = this.getAge();
-        if (18 <= age && age < 25) {
-            score += 0;
-        } else if (22 <= age && age < 30) {
-            score += 50;
-        } else if (30 <= age && age < 60) {
-            score += 100;
-        } else {
-            score += 0;
-        }
-        // Verificaciones de salario
-        int income = this.getIncome();
-        if (0 <= income && income < 1500000) {
-            score += 0;
-        } else if (1500000 <= age && age < 2200000) {
-            score += 50;
-        } else if (2200000 <= age && age < 4000000) {
-            score += 100;
-        } else if (4000000 <= age && age < 10000000) {
-            score += 200;
-        } else {
-            score += 250;
-        }
-        // Verificaiones de contrato
-        int contractType = this.getContractType();
-        if (contractType == 1 || contractType == 2) {
-            score += 50;
-        } else {
-            score += 0;
-        }
-        // Verificación de deudas
-        int debtsBalance = this.getIncome() - this.getDebts();
-        if (debtsBalance < 0) {
-            score -= 50;
-        } else if (0 <= debtsBalance && debtsBalance < 1000000) {
-            score += 0;
-        } else if (1000000 <= debtsBalance && debtsBalance < 5000000) {
-            score += 50;
-        } else {
-            score += 100;
-        }
-        // Redondeando en el tope
-        if (score > 1000) {
-            int diference = score - 1000;
-            score -= diference;
-        }
-        return score;
-    }
+    protected abstract int calculateRisk();
 
     /**
      * Metodo que permite al usuario solicitar un prestamo
@@ -119,50 +69,12 @@ public abstract class User {
      * @param amount
      * @return Booelan
      */
-    public String requestLoan(double amount, int term, LocalDate generationDate) {
-        if (score >= 600) {
-            // Allow the loan request
-            Product loan = new RegularLoan(amount, term, generationDate);
-            products.add((RegularLoan) loan);
-            spendAmount += amount;
-
-            double monthlyPayment = loan.calculateMonthlyPayment();
-            loan.setMonthlyPayment(monthlyPayment);
-
-            loan.generateInstallments();
-
-            loan.setRemainingBalance(amount);
-
-            return "Su solicitud ha sido aprobada con un monto de: " + amount + "\n" + "El id de su prestamo es: "
-                    + loan.getId();
-        } else {
-            // Grant a loan amount less than requested
-            double grantedAmount = (double) amount * 0.75;
-            if (grantedAmount > 0) {
-                Product loan = new RegularLoan(grantedAmount, term, generationDate);
-                products.add((RegularLoan) loan);
-                spendAmount += grantedAmount;
-
-                double monthlyPayment = loan.calculateMonthlyPayment();
-                loan.setMonthlyPayment(monthlyPayment);
-
-                loan.generateInstallments();
-
-                loan.setRemainingBalance(grantedAmount);
-
-                return "Su solicitud ha sido aprobada con un monto de: " + grantedAmount + "\n"
-                        + "Esto debido a que su puntaje es menor a 600" + "\n" + "El id de su prestamo es: "
-                        + loan.getId();
-            } else {
-                return "Su solcitud no ha sido aprobada por nuestros asesores"; // User is not eligible for a loan
-            }
-        }
-    }
+    public abstract String requestLoan(double amount, int term, LocalDate generationDate);
 
     public String conginment(int amount) {
         this.spendAmount += amount;
         return "Su consignacion ha sido exitosa";
-    }
+    };
 
     public String listProducts() {
         String stringProducts = "";
@@ -170,7 +82,7 @@ public abstract class User {
             stringProducts += product.toString() + "\n\n";
         }
         return stringProducts;
-    }
+    };
 
     /**
      * Metodo que permite al usuario pagar cuota de algun prestamo
@@ -210,7 +122,7 @@ public abstract class User {
             message = "No existen pagos pendientes para la fecha: " + date;
         }
         return message;
-    }
+    };
 
     /**
      * Metodo que permite al usuario diferir en más cuotas un prestamo Aumentando la
@@ -345,11 +257,11 @@ public abstract class User {
         this.score = score;
     }
 
-    public ArrayList<RegularLoan> getProducts() {
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<RegularLoan> products) {
+    public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
 
