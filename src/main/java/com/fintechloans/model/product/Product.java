@@ -6,18 +6,18 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class Product {
-    private int id;
-    private double loanAmount;
-    private double interestRate;
-    private int termInMonths;
-    private double remainingBalance;
-    private double monthlyPayment;
-    private LocalDate startDate;
-    private LocalDate dueDate;
+    protected int id;
+    protected double loanAmount;
+    protected double interestRate;
+    protected int termInMonths;
+    protected double remainingBalance;
+    protected double monthlyPayment;
+    protected LocalDate startDate;
+    protected LocalDate dueDate;
 
-    private List<LocalDate> installments;
-    private boolean paidOff;
-    private boolean isOverDue;
+    protected List<LocalDate> installments;
+    protected boolean paidOff;
+    protected boolean isOverDue;
 
     public Product(double loanAmount, int termInMonths, LocalDate startDate) {
         this.id = (int) Math.random() * 1000;
