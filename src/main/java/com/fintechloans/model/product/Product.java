@@ -12,7 +12,6 @@ public abstract class Product {
     private int termInMonths;
     private double remainingBalance;
     private double monthlyPayment;
-    // Pendiente revisión de fechas
     private LocalDate startDate;
     private LocalDate dueDate;
 
@@ -23,14 +22,12 @@ public abstract class Product {
     public Product(double loanAmount, int termInMonths, LocalDate startDate) {
         this.id = (int) Math.random() * 1000;
         this.loanAmount = loanAmount;
-        this.interestRate = 33.333333;
+        this.interestRate = 0.05;
         this.termInMonths = termInMonths;
-        this.monthlyPayment = this.calculateMonthlyPayment();
         this.startDate = startDate;
         this.dueDate = startDate.plusMonths(1);
         // Implementar logica de creación de fechas
         this.installments = new ArrayList<>();
-        this.generateInstallments();
         this.paidOff = false;
         this.isOverDue = false;
         this.remainingBalance = loanAmount;
@@ -48,7 +45,7 @@ public abstract class Product {
         return message;
     }
 
-    //generador de ids
+    // generador de ids
     private int generateRandomId() {
         Random random = new Random();
         return random.nextInt(1000);
@@ -57,19 +54,15 @@ public abstract class Product {
     // Metodo para generar fechas de installments
     public void generateInstallments() {
         this.installments.add(this.dueDate);
-        for (int i = 1; i <= termInMonths; i++) {
+        for (int i = 1; i < termInMonths; i++) {
             this.installments.add(this.dueDate.plusMonths(i));
         }
     }
 
     // Metodo para calcular el pago mensual
     public double calculateMonthlyPayment() {
-        double monthlyInterestRate = interestRate / 12.0;
-        double numerator = loanAmount * monthlyInterestRate;
-        //loan amortization formula
-        //loan repayment formula
-        double denominator = 1 - Math.pow(1 + monthlyInterestRate, -termInMonths);
-        return numerator / denominator;
+        double monthlyPayment = this.loanAmount / this.termInMonths;
+        return monthlyPayment * interestRate;
     }
 
     public int getId() {
@@ -90,6 +83,10 @@ public abstract class Product {
 
     public int getTermInMonths() {
         return termInMonths;
+    }
+
+    public void setTermInMonths(int termInMonths) {
+        this.termInMonths = termInMonths;
     }
 
     public LocalDate getDueDate() {
@@ -146,7 +143,9 @@ public abstract class Product {
 
     @Override
     public String toString() {
-        return "Monto prestado: " + this.getLoanAmount() + "\n" + "Numero de cuotas: " + this.getTermInMonths() + "\n"
-                + "Fecha de inicialización" + this.getStartDate();
+        return "Id del prestamo: " + this.getId() + "\n" + "Monto prestado: " + this.getLoanAmount() + "\n"
+                + "Numero de cuotas: "
+                + this.getTermInMonths() + "\n"
+                + "Fecha de inicialización: " + this.getStartDate();
     }
 }

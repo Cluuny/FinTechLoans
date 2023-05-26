@@ -3,87 +3,12 @@
     "name": "Vicente Matallana",
     "email": "si",
     "password": "no",
-    "age": 18,
-    "income": 1800000,
-    "spendAmount": 1800000,
+    "age": 20,
+    "income": 4500000,
+    "spendAmount": 1499999,
     "contractType": 1,
-    "debts": 120000,
+    "debts": 250000,
     "score": 750,
-    "products": [
-      {
-        "id": 0,
-        "loanAmount": 1000000.0,
-        "interestRate": 0.0,
-        "termInMonths": 6,
-        "remainingBalance": 1000000.0,
-        "monthlyPayment": NaN,
-        "startDate": "2023-05-26",
-        "dueDate": "2023-06-26",
-        "installments": [
-          "2023-06-26",
-          "2023-07-26",
-          "2023-08-26",
-          "2023-09-26",
-          "2023-10-26",
-          "2023-11-26",
-          "2023-12-26",
-          "2023-06-26",
-          "2023-07-26",
-          "2023-08-26",
-          "2023-09-26",
-          "2023-10-26",
-          "2023-11-26",
-          "2023-12-26"
-        ],
-        "paidOff": false,
-        "isOverDue": false
-      },
-      {
-        "id": 0,
-        "loanAmount": 250000.0,
-        "interestRate": 0.0,
-        "termInMonths": 3,
-        "remainingBalance": 250000.0,
-        "monthlyPayment": NaN,
-        "startDate": "2023-05-26",
-        "dueDate": "2023-06-26",
-        "installments": [
-          "2023-06-26",
-          "2023-07-26",
-          "2023-08-26",
-          "2023-09-26",
-          "2023-06-26",
-          "2023-07-26",
-          "2023-08-26",
-          "2023-09-26"
-        ],
-        "paidOff": false,
-        "isOverDue": false
-      },
-      {
-        "id": 0,
-        "loanAmount": 300000.0,
-        "interestRate": 0.0,
-        "termInMonths": 4,
-        "remainingBalance": 300000.0,
-        "monthlyPayment": NaN,
-        "startDate": "2023-05-26",
-        "dueDate": "2023-06-26",
-        "installments": [
-          "2023-06-26",
-          "2023-07-26",
-          "2023-08-26",
-          "2023-09-26",
-          "2023-10-26",
-          "2023-06-26",
-          "2023-07-26",
-          "2023-08-26",
-          "2023-09-26",
-          "2023-10-26"
-        ],
-        "paidOff": false,
-        "isOverDue": false
-      }
-    ]
+    "products": []
   }
 ]

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import com.fintechloans.model.product.Product;
 import com.fintechloans.model.product.RegularLoan;
-import com.fintechloans.model.services.ToolKit;
 
 public abstract class User {
     /**
@@ -134,7 +133,8 @@ public abstract class User {
 
             loan.setRemainingBalance(amount);
 
-            return "Su solicitud ha sido aprobada con un monto de: " + amount + "\n";
+            return "Su solicitud ha sido aprobada con un monto de: " + amount + "\n" + "El id de su prestamo es: "
+                    + loan.getId();
         } else {
             // Grant a loan amount less than requested
             double grantedAmount = (double) amount * 0.75;
@@ -151,17 +151,23 @@ public abstract class User {
                 loan.setRemainingBalance(grantedAmount);
 
                 return "Su solicitud ha sido aprobada con un monto de: " + grantedAmount + "\n"
-                        + "Esto debido a que su puntaje es menor a 600";
+                        + "Esto debido a que su puntaje es menor a 600" + "\n" + "El id de su prestamo es: "
+                        + loan.getId();
             } else {
                 return "Su solcitud no ha sido aprobada por nuestros asesores"; // User is not eligible for a loan
             }
         }
     }
 
+    public String conginment(int amount) {
+        this.spendAmount += amount;
+        return "Su consignacion ha sido exitosa";
+    }
+
     public String listProducts() {
         String stringProducts = "";
         for (Product product : this.products) {
-            stringProducts += product.toString() + "\n";
+            stringProducts += product.toString() + "\n\n";
         }
         return stringProducts;
     }
@@ -180,9 +186,11 @@ public abstract class User {
 
         if (installments.contains(date)) {
             if (spendAmount >= installmentAmount) {
-                message = "Payment received successfully for the date: " + date;
+                message = "Pago correctamente recibido para la fecha: " + date;
                 installments.remove(date);
                 spendAmount -= installmentAmount;
+                LocalDate nextInstallment = installments.get(0);
+                product.setDueDate(nextInstallment);
 
                 // El siguiente if else statement actualiza la variable remainingBalance
                 // para poder manejar un método cancell con un balance para hacerle payoff al
@@ -196,10 +204,10 @@ public abstract class User {
                     product.setPaidOff(true);
                 }
             } else {
-                message = "Insufficient funds to pay the installment due on: " + date;
+                message = "Fondos insuficientes para pagar la cuota en la fecha: " + date;
             }
         } else {
-            message = "No pending payments for the date: " + date;
+            message = "No existen pagos pendientes para la fecha: " + date;
         }
         return message;
     }
@@ -216,28 +224,17 @@ public abstract class User {
     public String deferLoan(Product product, int term) {
         int maxExtensionMonths = 3;
         if (term > maxExtensionMonths) {
-            return "Unable to defer loan for more than " + maxExtensionMonths + " months.";
+            return "No se puede diferir un prestamo a mas de  " + maxExtensionMonths + " meses.";
         }
 
-        LocalDate originalDueDate = product.getDueDate();
-        LocalDate newDueDate = originalDueDate.plusMonths(term);
-        LocalDate currentDate = LocalDate.now();
-
-        if (newDueDate.isBefore(currentDate)) {
-            return "Unable to defer loan to a past date.";
+        LocalDate lastDueDate = product.getInstallments().get(product.getInstallments().size() - 1);
+        for (int index = 1; index <= term; index++) {
+            product.getInstallments().add(lastDueDate.plusMonths(index));
         }
+        product.setTermInMonths(term);
+        product.calculateMonthlyPayment();
 
-        if (newDueDate.isBefore(originalDueDate)) {
-            return "Unable to defer loan to an earlier date.";
-        }
-
-        if (newDueDate.isEqual(originalDueDate)) {
-            return "Loan due date remains unchanged.";
-        }
-
-        product.setDueDate(newDueDate);
-        product.generateInstallments();
-        return "The due date of your loan has been extended successfully.";
+        return "La fecha de vencimiento de su préstamo ha sido diferida con éxito.";
     }
 
     /**
@@ -246,19 +243,17 @@ public abstract class User {
      * @param product
      * @return
      */
-    public boolean cancelProduct(Product product) {
+    public String cancelProduct(Product product) {
+        String response = "No se cumplen las condiciones para cancelar el producto";
         if (products.contains(product)) {
             double remainingBalance = product.getRemainingBalance();
             if (spendAmount >= remainingBalance) {
                 spendAmount -= remainingBalance;
                 products.remove(product);
-                return true;
-            } else {
-                return false; // El usuario no tiene plata para pagar el prestamo
+                response = "Producto cancelado exitosamente";
             }
-        } else {
-            return false; // Producto no se encuentra en la lista de productos del usuario
         }
+        return response;
     }
 
     /**

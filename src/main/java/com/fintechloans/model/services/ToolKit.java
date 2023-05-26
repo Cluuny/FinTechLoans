@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.fintechloans.exceptions.*;
+import com.fintechloans.model.product.Product;
 import com.fintechloans.model.user.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -204,5 +205,17 @@ public class ToolKit {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public Product getProductById(int id, User user) {
+        Product product = null;
+        try {
+            product = user.getProducts().stream().filter((productToFind) -> {
+                return productToFind.getId() == id;
+            }).findFirst().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return product;
     }
 }

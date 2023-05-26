@@ -1,7 +1,6 @@
 package com.fintechloans.model.product;
 
 import java.time.LocalDate;
-import java.time.*;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 
@@ -38,7 +37,7 @@ public class VirtualCard extends Product {
     LocalDate expirationDate;
     DateTimeFormatter formatter;
 
-    public VirtualCard(double loanAmount,  int termInMonths, LocalDate dueDate) {
+    public VirtualCard(double loanAmount, int termInMonths, LocalDate dueDate) {
         super(loanAmount, termInMonths, dueDate);
     }
 

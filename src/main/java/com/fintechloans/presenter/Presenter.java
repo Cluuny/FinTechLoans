@@ -6,17 +6,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.fintechloans.model.product.Product;
 import com.fintechloans.model.services.ToolKit;
 import com.fintechloans.model.user.User;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class Presenter {
     private View view;
     private ToolKit toolkit;
 
+    private LocalDate actuLocalDate;
+
     public Presenter() throws Exception {
         view = new View();
         toolkit = new ToolKit();
+        actuLocalDate = LocalDate.now();
     }
 
     public void run() {
@@ -141,42 +144,63 @@ public class Presenter {
 
     public void runServices(User user) {
         String runServicesMenu = "Bienvenido, " + user.getName()
-                + "! \nHemos verificado tu identidad!\nAhora porfavor escoge que quieres hacer hoy?\n1. Adquirir productos\n2. Listar productos\n3. Pagar productos\n4. Cancelar productos\n5. Diferir producto\n6. Simular paso del tiempo\n7. Visitar mercados\n8. Cerrar sesión y regresar al menu principal";
+                + "! \nHemos verificado tu identidad!\nAhora porfavor escoge que quieres hacer hoy?\n1. Adquirir productos\n2. Listar productos\n3. Pagar productos\n4. Cancelar productos\n5. Diferir producto\n6. Visitar mercados\n7. Consignar\n8. Cerrar sesión y regresar al menu principal";
         boolean flag = true;
+        int productId;
+        Product product;
         while (flag) {
             int runServicesOpt = view.readInt(runServicesMenu);
             switch (runServicesOpt) {
                 case 1:
                     double amount = view.readDouble("Ingresa el monto para tu prestamo: ");
                     int term = view.readInt("Ingresa el numero de cuotas: ");
-                    String response = user.requestLoan(amount, term, LocalDate.now());
+                    String responestoRequest = user.requestLoan(amount, term, LocalDate.now());
+                    view.print(responestoRequest);
                     toolkit.updateJsonInfo(user);
-                    view.print(response);
                     break;
                 case 2:
                     String responString = user.listProducts();
                     view.print(responString);
                     break;
                 case 3:
-                    // Implementacion de pago de productos
-                    // user.payLoanInstallment
+                    view.print("Fecha actual: " + actuLocalDate);
+                    view.print("Simulando paso del tiempo...");
+                    actuLocalDate = actuLocalDate.plusMonths(1);
+                    view.print("Simulando completa." + "\n" + "Fecha actual: " + actuLocalDate);
+                    productId = view.readInt("Ingresa el id del producto que deseas pagar: ");
+                    product = toolkit.getProductById(productId, user);
+                    String responseToPay = user.payLoanInstallment(actuLocalDate, product);
+                    view.print(responseToPay);
+                    toolkit.updateJsonInfo(user);
                     break;
                 case 4:
-                    // Implementacion de cancelacion de productos
-                    // user.cancelProduct
+                    productId = view.readInt("Ingresa el id del producto que deseas pagar: ");
+                    product = toolkit.getProductById(productId, user);
+                    String responseToCancel = user.cancelProduct(product);
+                    view.print(responseToCancel);
+                    toolkit.updateJsonInfo(user);
                     break;
                 case 5:
-                    // Implementación para diferir productos
-                    // user.deferLoan
+                    productId = view.readInt("Ingresa el id del producto que deseas pagar: ");
+                    product = toolkit.getProductById(productId, user);
+                    int termToDiffer = view.readInt("Ingresa el numero de meses al que quieres diferir el prestamo: ");
+                    String responseToDiffer = user.deferLoan(product, termToDiffer);
+                    view.print(responseToDiffer);
+                    toolkit.updateJsonInfo(user);
                     break;
                 case 6:
-                    // Implementacion de simulacion de paso del tiempo
+                    // Implementacion de Visita de mercados
                     break;
                 case 7:
-                    // Implementacion de visita a mercados
+                    int consigmentValue = view.readInt("Ingresa el valor a consignar: ");
+                    user.conginment(consigmentValue);
+                    toolkit.updateJsonInfo(user);
                     break;
                 case 8:
                     flag = false;
+                    break;
+                default:
+                    view.print("Opción no valida, porfavor intente de nuevo");
                     break;
             }
         }
