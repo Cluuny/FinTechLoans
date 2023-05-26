@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.fintechloans.model.product.Product;
 import com.fintechloans.model.product.RegularLoan;
+import com.fintechloans.model.services.ToolKit;
 
 public abstract class User {
     /**
@@ -154,6 +155,14 @@ public abstract class User {
                 return false; // User is not eligible for a loan
             }
         }
+    }
+
+    public String listProducts() {
+        String stringProducts = "";
+        for (Product product : this.products) {
+            stringProducts += product.toString() + "\n";
+        }
+        return stringProducts;
     }
 
     /**

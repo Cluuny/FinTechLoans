@@ -30,6 +30,7 @@ public class View {
       return this.readString(message);
     }
   }
+
   public double readDouble(String message) {
     System.out.println(message);
     double input = 0;

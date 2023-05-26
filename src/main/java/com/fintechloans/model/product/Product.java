@@ -99,6 +99,7 @@ public abstract class Product {
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
+
     public void setPaidOff(boolean paidOff) {
         this.paidOff = paidOff;
     }
@@ -127,4 +128,8 @@ public abstract class Product {
         return paidOff;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

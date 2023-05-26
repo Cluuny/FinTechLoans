@@ -139,13 +139,15 @@ public class Presenter {
     public void runServices(User user) {
         String runServicesMenu = "Bienvenido, " + user.getName()
                 + "! \nHemos verificado tu identidad!\nAhora porfavor escoge que quieres hacer hoy?\n1. Adquirir productos\n2. Pagar productos\n3. Cancelar productos\n4. Diferir producto\n5. Simular paso del tiempo\n6. Visitar mercados\n7. Cerrar sesión y regresar al menu principal";
-        int runServicesOpt = view.readInt(runServicesMenu);
-        while (runServicesOpt <= 4) {
+        boolean flag = true;
+        while (flag) {
+            int runServicesOpt = view.readInt(runServicesMenu);
             switch (runServicesOpt) {
                 case 1:
                     double amount = view.readDouble("Ingresa el monto para tu prestamo: ");
-                    int term = view.readInt("Ingresa el numero de cuotas: ");
-                    user.requestLoan(amount, term, LocalDate.now());
+                    int term = view.readInt("Ingresa el numero de cuotas en las que puedes pagar: ");
+                    boolean response = user.requestLoan(amount, term, LocalDate.now());
+                    view.print(response ? "Su solicitud ha sido aprobada" : "Su solicitud ha sido rechazada");
                     break;
                 case 2:
                     // Implementacion de pago de productos
@@ -166,7 +168,7 @@ public class Presenter {
                     // Implementacion de visita a mercados
                     break;
                 case 7:
-                    runServicesOpt = 5;
+                    flag = false;
                     break;
             }
         }
