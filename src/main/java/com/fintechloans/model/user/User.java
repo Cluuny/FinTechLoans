@@ -120,7 +120,7 @@ public abstract class User {
      * @param amount
      * @return Booelan
      */
-    public boolean requestLoan(double amount, int term, LocalDate generationDate) {
+    public String requestLoan(double amount, int term, LocalDate generationDate) {
         if (score >= 600) {
             // Allow the loan request
             Product loan = new RegularLoan(amount, term, generationDate);
@@ -134,10 +134,10 @@ public abstract class User {
 
             loan.setRemainingBalance(amount);
 
-            return true;
+            return "Su solicitud ha sido aprobada con un monto de: " + amount + "\n";
         } else {
             // Grant a loan amount less than requested
-            int grantedAmount = score / 2;
+            double grantedAmount = (double) amount * 0.75;
             if (grantedAmount > 0) {
                 Product loan = new RegularLoan(grantedAmount, term, generationDate);
                 products.add(loan);
@@ -150,9 +150,10 @@ public abstract class User {
 
                 loan.setRemainingBalance(grantedAmount);
 
-                return true;
+                return "Su solicitud ha sido aprobada con un monto de: " + grantedAmount + "\n"
+                        + "Esto debido a que su puntaje es menor a 600";
             } else {
-                return false; // User is not eligible for a loan
+                return "Su solcitud no ha sido aprobada por nuestros asesores"; // User is not eligible for a loan
             }
         }
     }

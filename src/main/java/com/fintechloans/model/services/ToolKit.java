@@ -45,6 +45,7 @@ public class ToolKit {
         casinoUsersPath = "src/main/java/com/fintechloans/data/casinoUsers.json";
         merchantsPath = "src/main/java/com/fintechloans/data/merchants.json";
         jsonMapper = new GsonBuilder().registerTypeAdapter(LocalDate.class, new GsonLocalDateAdapter())
+                .serializeSpecialFloatingPointValues()
                 .create();
     }
 

@@ -4,11 +4,40 @@
     "email": "si",
     "password": "no",
     "age": 18,
-    "income": 180,
-    "spendAmount": 12,
+    "income": 10000000,
+    "spendAmount": 2010000,
     "contractType": 1,
-    "debts": 1,
-    "score": 450,
-    "products": []
+    "debts": 20000,
+    "score": 800,
+    "products": [
+      {
+        "id": 0,
+        "loanAmount": 1000000.0,
+        "interestRate": 0.0,
+        "termInMonths": 6,
+        "remainingBalance": 1000000.0,
+        "monthlyPayment": 60,
+        "startDate": "2023-05-26",
+        "dueDate": "2023-06-26",
+        "installments": [
+          "2023-06-26",
+          "2023-07-26",
+          "2023-08-26",
+          "2023-09-26",
+          "2023-10-26",
+          "2023-11-26",
+          "2023-12-26",
+          "2023-06-26",
+          "2023-07-26",
+          "2023-08-26",
+          "2023-09-26",
+          "2023-10-26",
+          "2023-11-26",
+          "2023-12-26"
+        ],
+        "paidOff": false,
+        "isOverDue": false
+      }
+    ]
   }
 ]

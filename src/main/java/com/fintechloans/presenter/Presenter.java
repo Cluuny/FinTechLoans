@@ -44,7 +44,7 @@ public class Presenter {
                     } catch (Exception e) {
                         view.print(
                                 "Ha ocurrido un error inesperado, porfavor intente de nuevo\n" + e.getMessage() + "\n"
-                                        + e.getStackTrace());
+                                        + e.getStackTrace() + "\n" + e.getLocalizedMessage() + "\n" + e.getCause());
                     }
                     break;
                 case 3:
@@ -140,7 +140,7 @@ public class Presenter {
 
     public void runServices(User user) {
         String runServicesMenu = "Bienvenido, " + user.getName()
-                + "! \nHemos verificado tu identidad!\nAhora porfavor escoge que quieres hacer hoy?\n1. Adquirir productos\n2. Pagar productos\n3. Cancelar productos\n4. Diferir producto\n5. Simular paso del tiempo\n6. Visitar mercados\n7. Cerrar sesión y regresar al menu principal";
+                + "! \nHemos verificado tu identidad!\nAhora porfavor escoge que quieres hacer hoy?\n1. Adquirir productos\n2. Listar productos\n3. Pagar productos\n4. Cancelar productos\n5. Diferir producto\n6. Simular paso del tiempo\n7. Visitar mercados\n8. Cerrar sesión y regresar al menu principal";
         boolean flag = true;
         while (flag) {
             int runServicesOpt = view.readInt(runServicesMenu);
@@ -148,28 +148,33 @@ public class Presenter {
                 case 1:
                     double amount = view.readDouble("Ingresa el monto para tu prestamo: ");
                     int term = view.readInt("Ingresa el numero de cuotas: ");
-                    boolean response = user.requestLoan(amount, term, LocalDate.now());
-                    view.print(response ? "Su solicitud ha sido aprobada" : "Su solicitud ha sido rechazada");
+                    String response = user.requestLoan(amount, term, LocalDate.now());
+                    toolkit.updateJsonInfo(user);
+                    view.print(response);
                     break;
                 case 2:
+                    String responString = user.listProducts();
+                    view.print(responString);
+                    break;
+                case 3:
                     // Implementacion de pago de productos
                     // user.payLoanInstallment
                     break;
-                case 3:
+                case 4:
                     // Implementacion de cancelacion de productos
                     // user.cancelProduct
                     break;
-                case 4:
+                case 5:
                     // Implementación para diferir productos
                     // user.deferLoan
                     break;
-                case 5:
+                case 6:
                     // Implementacion de simulacion de paso del tiempo
                     break;
-                case 6:
+                case 7:
                     // Implementacion de visita a mercados
                     break;
-                case 7:
+                case 8:
                     flag = false;
                     break;
             }

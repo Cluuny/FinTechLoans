@@ -130,6 +130,7 @@ public abstract class Product {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Monto prestado: " + this.getLoanAmount() + "\n" + "Numero de cuotas: " + this.getTermInMonths() + "\n"
+                + "Fecha de inicialización" + this.getStartDate();
     }
 }
