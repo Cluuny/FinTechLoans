@@ -4,9 +4,11 @@ import com.fintechloans.view.View;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.fintechloans.model.services.ToolKit;
 import com.fintechloans.model.user.User;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class Presenter {
     private View view;
@@ -29,7 +31,7 @@ public class Presenter {
                     } catch (Exception e) {
                         view.print(
                                 "Ha ocurrido un error inesperado, porfavor intente de nuevo\n" + e.getMessage() + "\n"
-                                        + e.getStackTrace());
+                                        + Arrays.toString(e.getStackTrace()));
                     }
                     break;
                 case 2:
@@ -139,13 +141,15 @@ public class Presenter {
     public void runServices(User user) {
         String runServicesMenu = "Bienvenido, " + user.getName()
                 + "! \nHemos verificado tu identidad!\nAhora porfavor escoge que quieres hacer hoy?\n1. Adquirir productos\n2. Pagar productos\n3. Cancelar productos\n4. Diferir producto\n5. Simular paso del tiempo\n6. Visitar mercados\n7. Cerrar sesión y regresar al menu principal";
+        boolean flag = true;
+        while (flag) {
         int runServicesOpt = view.readInt(runServicesMenu);
-        while (runServicesOpt <= 4) {
             switch (runServicesOpt) {
                 case 1:
                     double amount = view.readDouble("Ingresa el monto para tu prestamo: ");
                     int term = view.readInt("Ingresa el numero de cuotas: ");
-                    user.requestLoan(amount, term, LocalDate.now());
+                    boolean response = user.requestLoan(amount, term, LocalDate.now());
+                    view.print(response ? "Su solicitud ha sido aprobada" : "Su solicitud ha sido rechazada");
                     break;
                 case 2:
                     // Implementacion de pago de productos
@@ -166,7 +170,7 @@ public class Presenter {
                     // Implementacion de visita a mercados
                     break;
                 case 7:
-                    runServicesOpt = 5;
+                    flag = false;
                     break;
             }
         }
