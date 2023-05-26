@@ -38,8 +38,8 @@ public class VirtualCard extends Product {
     LocalDate expirationDate;
     DateTimeFormatter formatter;
 
-    public VirtualCard(double loanAmount, double interestRate, int termInMonths, LocalDate dueDate) {
-        super(loanAmount, interestRate, termInMonths, dueDate);
+    public VirtualCard(double loanAmount,  int termInMonths, LocalDate dueDate) {
+        super(loanAmount, termInMonths, dueDate);
     }
 
     /**

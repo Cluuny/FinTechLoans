@@ -19,7 +19,7 @@ public abstract class Product {
     private boolean paidOff;
     private boolean isOverDue;
 
-    public Product(double loanAmount, double interestRate, int termInMonths, LocalDate startDate) {
+    public Product(double loanAmount, int termInMonths, LocalDate startDate) {
         this.id = (int) Math.random() * 1000;
         this.loanAmount = loanAmount;
         this.interestRate = interestRate;

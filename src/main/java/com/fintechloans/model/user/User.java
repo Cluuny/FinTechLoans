@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.fintechloans.model.product.Product;
-import com.fintechloans.model.services.ToolKit;
+import com.fintechloans.model.product.RegularLoan;
 
 public abstract class User {
     /**
@@ -40,7 +40,6 @@ public abstract class User {
     private int debts;
     private int score;
     private ArrayList<Product> products;
-    private ToolKit toolKit = new ToolKit();
 
     public User(
             String name, String email,
@@ -120,14 +119,41 @@ public abstract class User {
      * @param amount
      * @return Booelan
      */
-    public boolean requestLoan(int amount, int term, LocalDate generationDate) {
-        // ESTA LINEA ES DE TESTEO
-        // Este metodo se basa en el score y en el amount que se recibe como parametro
-        // Si el usuario tiene un score mayor a 600 se le permite el prestamo, en caso
-        // contrario se le presta menos de lo que pide
-        // Crear un producto con sus propiedades y sus datos
-        toolKit.updateJsonInfo(this);
-        return false;
+    public boolean requestLoan(double amount, int term, LocalDate generationDate) {
+        if (score >= 600) {
+            // Allow the loan request
+            Product loan = new RegularLoan(amount, term, generationDate);
+            products.add(loan);
+            spendAmount += amount;
+
+            double monthlyPayment = loan.calculateMonthlyPayment();
+            loan.setMonthlyPayment(monthlyPayment);
+
+            loan.generateInstallments();
+
+            loan.setRemainingBalance(amount);
+
+            return true;
+        } else {
+            // Grant a loan amount less than requested
+            int grantedAmount = score / 2;
+            if (grantedAmount > 0) {
+                Product loan = new RegularLoan(grantedAmount, term, generationDate);
+                products.add(loan);
+                spendAmount += grantedAmount;
+
+                double monthlyPayment = loan.calculateMonthlyPayment();
+                loan.setMonthlyPayment(monthlyPayment);
+
+                loan.generateInstallments();
+
+                loan.setRemainingBalance(grantedAmount);
+
+                return true;
+            } else {
+                return false; // User is not eligible for a loan
+            }
+        }
     }
 
     /**
@@ -149,7 +175,8 @@ public abstract class User {
                 spendAmount -= installmentAmount;
 
                 // El siguiente if else statement actualiza la variable remainingBalance
-                // para poder manejar un método cancell con un balance para hacerle payoff al loan
+                // para poder manejar un método cancell con un balance para hacerle payoff al
+                // loan
                 double remainingBalance = product.getRemainingBalance();
                 if (remainingBalance >= installmentAmount) {
                     remainingBalance -= installmentAmount;
@@ -167,9 +194,9 @@ public abstract class User {
         return message;
     }
 
-
     /**
-     * Metodo que permite al usuario diferir en más cuotas un prestamo Aumentando la fecha de vencimiento
+     * Metodo que permite al usuario diferir en más cuotas un prestamo Aumentando la
+     * fecha de vencimiento
      * del prestamo y generando las cuotas correspondientes
      *
      * @param product
@@ -177,11 +204,30 @@ public abstract class User {
      * @return String
      */
     public String deferLoan(Product product, int term) {
-        // Implementar logica de diferir prestamos
-        LocalDate newDueDate = product.getDueDate().plusMonths(term);
+        int maxExtensionMonths = 3;
+        if (term > maxExtensionMonths) {
+            return "Unable to defer loan for more than " + maxExtensionMonths + " months.";
+        }
+
+        LocalDate originalDueDate = product.getDueDate();
+        LocalDate newDueDate = originalDueDate.plusMonths(term);
+        LocalDate currentDate = LocalDate.now();
+
+        if (newDueDate.isBefore(currentDate)) {
+            return "Unable to defer loan to a past date.";
+        }
+
+        if (newDueDate.isBefore(originalDueDate)) {
+            return "Unable to defer loan to an earlier date.";
+        }
+
+        if (newDueDate.isEqual(originalDueDate)) {
+            return "Loan due date remains unchanged.";
+        }
+
         product.setDueDate(newDueDate);
         product.generateInstallments();
-        return "Se ha ampliado la fecha de su prestamo satisfactoriamente";
+        return "The due date of your loan has been extended successfully.";
     }
 
     /**
@@ -203,14 +249,6 @@ public abstract class User {
         } else {
             return false; // Producto no se encuentra en la lista de productos del usuario
         }
-    }
-
-
-    // Listar pagos pendientes con fechas
-    public String listPendingInstallments(Product product) {
-        // Implementar logica para listar pagos pendientes del producto
-        String pendingInstallments = "";
-        return pendingInstallments;
     }
 
     /**
