@@ -53,8 +53,12 @@ public abstract class Product {
 
     // Metodo para calcular el pago mensual
     public double calculateMonthlyPayment() {
-        return (loanAmount * interestRate) / (1 - Math.pow(1 + interestRate, -termInMonths));
+        double monthlyInterestRate = interestRate / 12.0;
+        double numerator = loanAmount * monthlyInterestRate;
+        double denominator = 1 - Math.pow(1 + monthlyInterestRate, -termInMonths);
+        return numerator / denominator;
     }
+
 
     public int getId() {
         return id;
