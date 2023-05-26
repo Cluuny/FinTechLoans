@@ -3,6 +3,7 @@ package com.fintechloans.model.product;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Product {
     private int id;
@@ -22,7 +23,7 @@ public abstract class Product {
     public Product(double loanAmount, int termInMonths, LocalDate startDate) {
         this.id = (int) Math.random() * 1000;
         this.loanAmount = loanAmount;
-        this.interestRate = interestRate;
+        this.interestRate = 33.333333;
         this.termInMonths = termInMonths;
         this.monthlyPayment = this.calculateMonthlyPayment();
         this.startDate = startDate;
@@ -33,14 +34,24 @@ public abstract class Product {
         this.paidOff = false;
         this.isOverDue = false;
         this.remainingBalance = loanAmount;
+        this.id = generateRandomId();
     }
 
     // Abstraer metodos
-    public void checkOverdueStatus(LocalDate currentDate) {
+    public String checkOverdueStatus(LocalDate currentDate) {
+        String message = null;
         if (!installments.isEmpty() && currentDate.isAfter(dueDate)) {
-            System.out.println("Installment is overdue. Please pay quickly to avoid being reported to credit bureaus.");
+            message = ("La cuota está en mora. Por favor pague pronto para evitar estar reportado en centrales de riesgo");
             isOverDue = true;
+
         }
+        return message;
+    }
+
+    //generador de ids
+    private int generateRandomId() {
+        Random random = new Random();
+        return random.nextInt(1000);
     }
 
     // Metodo para generar fechas de installments
@@ -55,6 +66,8 @@ public abstract class Product {
     public double calculateMonthlyPayment() {
         double monthlyInterestRate = interestRate / 12.0;
         double numerator = loanAmount * monthlyInterestRate;
+        //loan amortization formula
+        //loan repayment formula
         double denominator = 1 - Math.pow(1 + monthlyInterestRate, -termInMonths);
         return numerator / denominator;
     }

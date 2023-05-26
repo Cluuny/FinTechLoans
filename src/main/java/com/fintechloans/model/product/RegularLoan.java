@@ -9,11 +9,12 @@ public class RegularLoan extends Product {
     }
 
     @Override
-    public void checkOverdueStatus(LocalDate currentDate) {
+    public String checkOverdueStatus(LocalDate currentDate) {
         super.checkOverdueStatus(currentDate);
         if (isOverdue() && !isPaidOff()) {
             System.out.println("You are overdue. Please pay quickly to avoid being reported to credit bureaus.");
         }
+        return null;
     }
 
     private boolean isOverdue() {
