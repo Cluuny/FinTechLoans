@@ -44,7 +44,8 @@ public class Presenter {
                     } catch (Exception e) {
                         view.print(
                                 "Ha ocurrido un error inesperado, porfavor intente de nuevo\n" + e.getMessage() + "\n"
-                                        + e.getStackTrace() + "\n" + e.getLocalizedMessage() + "\n" + e.getCause());
+                                        + e.getStackTrace() + "\n" + e.getLocalizedMessage() + "\n" + e.getCause()
+                                        + "\n" + e.getClass());
                     }
                     break;
                 case 3:

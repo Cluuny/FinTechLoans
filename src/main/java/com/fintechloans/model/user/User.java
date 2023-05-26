@@ -40,7 +40,7 @@ public abstract class User {
     private int contractType;
     private int debts;
     private int score;
-    private ArrayList<Product> products;
+    private ArrayList<RegularLoan> products;
 
     public User(
             String name, String email,
@@ -59,7 +59,7 @@ public abstract class User {
         this.contractType = contractType;
         this.debts = debts;
         this.score = this.calculateRisk();
-        this.products = new ArrayList<Product>();
+        this.products = new ArrayList<RegularLoan>();
     }
 
     private int calculateRisk() {
@@ -124,7 +124,7 @@ public abstract class User {
         if (score >= 600) {
             // Allow the loan request
             Product loan = new RegularLoan(amount, term, generationDate);
-            products.add(loan);
+            products.add((RegularLoan) loan);
             spendAmount += amount;
 
             double monthlyPayment = loan.calculateMonthlyPayment();
@@ -140,7 +140,7 @@ public abstract class User {
             double grantedAmount = (double) amount * 0.75;
             if (grantedAmount > 0) {
                 Product loan = new RegularLoan(grantedAmount, term, generationDate);
-                products.add(loan);
+                products.add((RegularLoan) loan);
                 spendAmount += grantedAmount;
 
                 double monthlyPayment = loan.calculateMonthlyPayment();
@@ -350,11 +350,11 @@ public abstract class User {
         this.score = score;
     }
 
-    public ArrayList<Product> getProducts() {
+    public ArrayList<RegularLoan> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(ArrayList<RegularLoan> products) {
         this.products = products;
     }
 

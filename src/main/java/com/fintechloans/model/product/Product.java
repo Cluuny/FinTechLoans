@@ -59,7 +59,6 @@ public abstract class Product {
         return numerator / denominator;
     }
 
-
     public int getId() {
         return id;
     }
