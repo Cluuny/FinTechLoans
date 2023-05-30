@@ -1,7 +1,6 @@
 package com.fintechloans.model.product;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -33,7 +32,6 @@ public class VirtualCard extends Product {
     private long code;
     private String cardHolder;
     private int cvv;
-    private ArrayList<String> codes = new ArrayList<>();
     LocalDate expirationDate;
     DateTimeFormatter formatter;
 
@@ -42,7 +40,7 @@ public class VirtualCard extends Product {
     }
 
     /**
-     * Clase que permite generar un código de 16 dígitos aleatorios
+     * Método que permite generar un código de 16 dígitos aleatorios
      * 
      * @return String
      */
@@ -55,36 +53,7 @@ public class VirtualCard extends Product {
     }
 
     /**
-     * Clase que genera múltiples códigos de tarjetas virtuales
-     * 
-     * @param count
-     * @return ArrayList<String>
-     */
-    public ArrayList<String> generateCreditCardNumbers(int count) {
-        for (int i = 0; i < count; i++) {
-            String creditCardNumber = generateCode();
-            codes.add(creditCardNumber);
-        }
-        return codes;
-    }
-
-    /**
-     * Clase que compara las tarjetas virtuales para verificar que no se repitan
-     */
-    public void checkDuplicateCreditCardNumbers() {
-        for (int i = 0; i < codes.size() - 1; i++) {
-            String currentCode = codes.get(i);
-            for (int j = i + 1; j < codes.size(); j++) {
-                String otherCode = codes.get(j);
-                if (currentCode.equals(otherCode)) {
-                    throw new IllegalArgumentException("Se encontró un número duplicado");
-                }
-            }
-        }
-    }
-
-    /**
-     * Clase que genera un código de seguridad de 3 dígitos aleatorios
+     * Método que genera un código de seguridad de 3 dígitos aleatorios
      */
     public void generateCvv() {
         int min = 999;
@@ -94,7 +63,7 @@ public class VirtualCard extends Product {
     }
 
     /**
-     * Clase que genera la fecha de expiración de la tarjeta virtual
+     * Método que genera la fecha de expiración de la tarjeta virtual
      */
     public void generateExpirationDate() {
         expirationDate = LocalDate.now().plusYears(6);

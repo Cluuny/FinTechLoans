@@ -42,6 +42,8 @@ public class ToolKit {
     private FileWriter writer;
 
     public ToolKit() {
+        //Tener en cuenta que según el dispositivo puede variar que para importar las rutas correctamente
+        //se deba usar com. o com/, en caso de que no le funcione cambie la ruta a la que le funcione
         regularUsersPath = "src/main/java/com/fintechloans/data/regularUsers.json";
         casinoUsersPath = "src/main/java/com/fintechloans/data/casinoUsers.json";
         merchantsPath = "src/main/java/com/fintechloans/data/merchants.json";

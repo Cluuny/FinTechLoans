@@ -4,6 +4,13 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
+/**
+ * Clase que representa un producto de tipo prestamo de casino
+ * 
+ * @author Vicente Matallana, Gabriel Cely, Sebastian Cañon
+ * @version 1.0.1
+ */
 public class CasinoLoan extends Product {
     private static final int PAYMENT_INTERVAL_HOURS = 1;
 
@@ -12,6 +19,11 @@ public class CasinoLoan extends Product {
         this.setDueDate(startDate);
     }
 
+    /** 
+     * Método para generar las cuotas del prestamo
+     * 
+     * @return void
+     */
     @Override
     public void generateInstallments() {
         LocalDateTime currentDateTime = startDate.atStartOfDay();
@@ -22,6 +34,13 @@ public class CasinoLoan extends Product {
         }
     }
 
+    
+    /** 
+     * Método para verificar si el pago está atrasado o no
+     * 
+     * @param currentDate
+     * @return String
+     */
     @Override
     public String checkOverdueStatus(LocalDate currentDate) {
         String message = null;
@@ -35,6 +54,11 @@ public class CasinoLoan extends Product {
         return message;
     }
 
+    /** 
+     * Método para calcular el pago mensual del prestamo de casino con intereses
+     * 
+     * @return double
+     */
     @Override
     public double calculateMonthlyPayment() {
         double hourlyInterestRate = interestRate / (30 * 24); // Assuming 30 days in a month and 24 hours in a day

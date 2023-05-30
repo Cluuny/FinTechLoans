@@ -5,7 +5,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Product {
+
+/**
+ * Clase que representa un producto financiero, es la clase padre de todos los
+ * productos financieros
+ * 
+ * @author Vicente Matallana, Gabriel Cely, Sebastian Cañon
+ * @version 1.0.1
+ */
+public class Product {
+
+    /*
+     * Atributos de la clase Product
+     * 
+     * @param id Identificador del producto
+     * @param loanAmount Monto del préstamo
+     * @param interestRate Tasa de interés
+     * @param termInMonths Plazo en meses
+     * @param remainingBalance Saldo restante
+     * @param monthlyPayment Pago mensual
+     * @param startDate Fecha de inicio
+     * @param dueDate Fecha de vencimiento
+     * @param installments ArrayList que contiene las fechas de las cuotas
+     * @param paidOff Booleano que indica si el producto está pagado
+     * @param isOverDue Booleano que indica si el producto está en mora
+     * 
+     */
     protected int id;
     protected double loanAmount;
     protected double interestRate;
@@ -26,18 +51,20 @@ public abstract class Product {
         this.termInMonths = termInMonths;
         this.startDate = startDate;
         this.dueDate = startDate.plusMonths(1);
-        // Implementar logica de creación de fechas
         this.installments = new ArrayList<>();
         this.paidOff = false;
         this.isOverDue = false;
         this.remainingBalance = loanAmount;
-        this.id =
-
-                generateRandomId();
+        this.id = generateRandomId();
 
     }
 
-    // Abstraer metodos
+    /**
+     * Método que verifica si la cuota está en mora
+     * 
+     * @param currentDate
+     * @return String
+     */
     public String checkOverdueStatus(LocalDate currentDate) {
         String message = null;
         if (!installments.isEmpty() && currentDate.isAfter(dueDate)) {
@@ -48,7 +75,11 @@ public abstract class Product {
         return message;
     }
 
-    // generador de ids
+    /**
+     * Método que genera un id aleatorio
+     * 
+     * @return int
+     */
     private int generateRandomId() {
         Random random = new Random();
         return random.nextInt(1000);

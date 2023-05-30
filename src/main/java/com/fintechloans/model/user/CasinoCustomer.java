@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import com.fintechloans.model.product.CasinoLoan;
 import com.fintechloans.model.product.Product;
 
+/**
+ * Clase que representa un cliente del casino con sus caracteristicas especiales de una noche de juego
+ * 
+ * @author Vicente Matallana, Gabriel Cely, Sebastian Cañon
+ * @version 1.0
+ */
 public class CasinoCustomer extends User {
     private ArrayList<Integer> gameStats;
 
